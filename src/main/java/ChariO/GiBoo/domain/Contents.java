@@ -3,10 +3,9 @@ package ChariO.GiBoo.domain;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -22,5 +21,10 @@ public class Contents {
     private String c_contents;
     //private String c_image;
 
-    //From Facility.f_id, relations: ManyToOne
+    @ManyToOne
+    @JoinColumn(name="f_id")
+    private Facility facility;
+
+    @OneToMany(mappedBy = "contents", cascade = CascadeType.ALL)
+    private List<CategoryContents> categoryContentsList = new ArrayList<>();
 }

@@ -4,12 +4,14 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
 
-@Table(name="FAC") //DB Table Name Mapping
+@Table(name="Fac")
 public class Facility {
 
     @Id
@@ -28,5 +30,17 @@ public class Facility {
     private int f_minimal;
 
     private String f_intro;
+
+    @OneToMany(mappedBy = "facility", cascade = CascadeType.ALL)
+    private List<Contents> contentsList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "facility", cascade = CascadeType.ALL)
+    private List<Donation> donationList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "facility", cascade = CascadeType.ALL)
+    private List<Subscribe> subscribeList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "facility", cascade = CascadeType.ALL)
+    private List<FacilityCategory> facilityCategoryList = new ArrayList<>();
 
 }

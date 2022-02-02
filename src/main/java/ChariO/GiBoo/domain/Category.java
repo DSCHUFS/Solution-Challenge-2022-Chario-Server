@@ -3,10 +3,9 @@ package ChariO.GiBoo.domain;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -19,4 +18,14 @@ public class Category {
     private Long id;
 
     private String cate_name;
+
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    private List<FacilityCategory> facilityCategoryList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    private List<UserCategory> userCategoryList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    private List<CategoryContents> categoryContentsList = new ArrayList<>();
+
 }

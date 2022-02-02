@@ -24,8 +24,10 @@ public class Donation {
     @JoinColumn(name="f_id")
     private Facility facility;
 
+    @Column(name="u_m_price")
     private int donationPrice;
 
+    @Column(name="don_date")
     private int donationDate;
 
 }

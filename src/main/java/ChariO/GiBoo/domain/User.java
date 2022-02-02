@@ -27,6 +27,12 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Donation> donationList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Subscribe> subscribeList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<UserCategory> userCategoryList = new ArrayList<>();
+
     //==연관관계 method==//
     public void addDonation(Donation donation) {
         this.donationList.add(donation);

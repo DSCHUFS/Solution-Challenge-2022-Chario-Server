@@ -3,14 +3,12 @@ package ChariO.GiBoo.domain;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Getter
 @Setter
+@Table(name="Fac_Cate")
 public class FacilityCategory {
 
     @Id
@@ -18,7 +16,11 @@ public class FacilityCategory {
     @Column(name="f_cate_id") //PK
     private Long id;
 
-    //From Category.cate_id, relations:ManyToOne
+    @ManyToOne
+    @JoinColumn(name="f_id")
+    private Facility facility;
 
-    //From Facility.f_id, relations:ManyToOne
+    @ManyToOne
+    @JoinColumn(name="cate_id")
+    private Category category;
 }

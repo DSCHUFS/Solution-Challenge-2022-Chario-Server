@@ -16,7 +16,11 @@ public class Subscribe {
     @Column(name="u_f_sub_id") //PK
     private Long id;
 
-    //From User.u_id ManyToOne
+    @ManyToOne
+    @JoinColumn(name= "u_id")
+    private User user;
 
-    //From Facility.f_id //ManyToOne
+    @ManyToOne
+    @JoinColumn(name= "f_id")
+    private Facility facility;
 }
