@@ -1,6 +1,8 @@
 package ChariO.GiBoo.api;
 
+import ChariO.GiBoo.domain.Contents;
 import ChariO.GiBoo.domain.Facility;
+import ChariO.GiBoo.service.ContentService;
 import ChariO.GiBoo.service.FacService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -15,11 +17,14 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static ChariO.GiBoo.api.ContentApiController.*;
+
 @RestController
 @RequiredArgsConstructor
 public class FacApiController {
 
     private final FacService facService;
+    private final ContentService contentService;
 
     @Operation(summary = "facility list", description = "기관리스트")
     @ApiResponses({
@@ -36,17 +41,21 @@ public class FacApiController {
                 .collect(Collectors.toList());
         return new Result(collect.size(), collect);
     }
-    @Operation(summary = "facility each", description = "기관 상세")
+
+    @Operation(summary = "facility detail", description = "기관 상세")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "OK !!"),
-            @ApiResponse(responseCode = "400", description = "BAD REQUEST !!"),
-            @ApiResponse(responseCode = "404", description = "NOT FOUND !!"),
-            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR !!")
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
+            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @GetMapping("/api/facility/{id}")
-    public FacDto findFacility(@PathVariable("id") Long id){
+    public DetailFacResponse findFacility(@PathVariable("id") Long id){
         Facility facility = facService.findOne(id);
-        return new FacDto(facility);
+        List<ContentDto> collect = contentService.findByFac(id).stream()
+                .map(c -> new ContentDto(c))
+                .collect(Collectors.toList());
+        return new DetailFacResponse(new FacDto(facility), collect);
     }
 
     @Data
@@ -77,6 +86,23 @@ public class FacApiController {
             this.f_pay = f.getF_pay();
             this.f_logo = f.getF_logo();
         }
+    }
+
+    static class DetailFacDto extends FacDto{
+        private List<Contents> contentsList;
+
+        public DetailFacDto(Facility facility){
+            super(facility);
+            this.contentsList = facility.getContentsList();
+            System.out.println("facility = " + facility);
+        }
+    }
+
+    @Data
+    @AllArgsConstructor
+    static class DetailFacResponse<T>{
+        private FacDto facDto;
+        private T contentsList;
     }
 
     @Data
