@@ -20,9 +20,11 @@ public class Facility {
     private Long id;
 
     private String f_name;
-    private String f_email;
+    private String f_logo;
 
-    private int f_phone;
+    private String f_ars;
+
+    private String f_phone;
 
     private String f_home;
     private String f_pay;
