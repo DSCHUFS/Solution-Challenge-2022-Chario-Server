@@ -41,3 +41,6 @@ out/
 
 # env
 .env
+
+# yml
+src/main/resources/application-prod.yml

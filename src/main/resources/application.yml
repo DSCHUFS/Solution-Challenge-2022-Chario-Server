@@ -4,7 +4,6 @@ spring:
     username: ${mysql_username}
     password: ${mysql_password}
     driver-class-name: com.mysql.cj.jdbc.Driver
-#    driver-class-name: org.h2.Driver
 
   jpa:
     hibernate:
@@ -17,6 +16,8 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+  profiles:
+    active: prod
 
 logging.level:
   org.hibernate.SQL: debug

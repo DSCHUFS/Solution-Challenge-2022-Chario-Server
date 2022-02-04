@@ -2,9 +2,11 @@ package ChariO.GiBoo.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -21,6 +23,8 @@ public class Contents {
     private String c_contents;
     private String c_image;
     private String c_url;
+    @DateTimeFormat(pattern = "MM/dd/yyyy")
+    private Date c_pub_date;
 
     @ManyToOne
     @JoinColumn(name="f_id")
