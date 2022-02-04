@@ -17,4 +17,8 @@ public class FacRepository {
         return em.createQuery("select f from Facility f", Facility.class)
                 .getResultList();
     }
+
+    public Facility findOne(Long id){
+        return em.find(Facility.class, id);
+    }
 }
