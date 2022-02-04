@@ -19,7 +19,7 @@ public class Contents {
 
     private String c_title;
     private String c_contents;
-    //private String c_image;
+    private String c_image;
 
     @ManyToOne
     @JoinColumn(name="f_id")
