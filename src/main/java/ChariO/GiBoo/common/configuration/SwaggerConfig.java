@@ -16,7 +16,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.OAS_30)
                 .useDefaultResponseMessages(false)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("GiBoo.common.configuration"))
+                .apis(RequestHandlerSelectors.basePackage("ChariO.GiBoo.api"))
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(apiInfo());
