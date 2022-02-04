@@ -18,4 +18,9 @@ public class FacService {
     public List<Facility> findFacs(){
         return facRepository.findAll();
     }
+
+    @Transactional(readOnly = true)
+    public Facility findOne(Long facId){
+        return facRepository.findOne(facId);
+    }
 }
