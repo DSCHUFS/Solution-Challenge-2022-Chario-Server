@@ -1,17 +1,22 @@
 spring:
   datasource:
-    url: jdbc:h2:tcp://localhost/~/GiBoo
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
+    url: ${mysql_url}
+    username: ${mysql_username}
+    password: ${mysql_password}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+#    driver-class-name: org.h2.Driver
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
-        # show_sql: true
+        show_sql: true
         format_sql: true
+    database: mysql
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 
 logging.level:
   org.hibernate.SQL: debug
