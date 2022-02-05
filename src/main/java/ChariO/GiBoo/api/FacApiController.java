@@ -26,6 +26,9 @@ public class FacApiController {
     private final FacService facService;
     private final ContentService contentService;
 
+    /**
+     * Swagger 명세
+     */
     @Operation(summary = "facility list", description = "기관리스트")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK !!"),
@@ -33,6 +36,10 @@ public class FacApiController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND !!"),
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR !!")
     })
+
+    /**
+     * 기관 리스트 제공
+     */
     @GetMapping("/api/facilities")
     public Result facilities(){
         List<Facility> findFacs = facService.findFacs();
@@ -42,6 +49,9 @@ public class FacApiController {
         return new Result(collect.size(), collect);
     }
 
+    /**
+     Swagger 명세
+     **/
     @Operation(summary = "facility detail", description = "기관 상세")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK"),
@@ -49,6 +59,10 @@ public class FacApiController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND"),
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
+
+    /**
+     * 특정 기관 상세정보 조회
+     */
     @GetMapping("/api/facility/{id}")
     public DetailFacResponse findFacility(@PathVariable("id") Long id){
         Facility facility = facService.findOne(id);
