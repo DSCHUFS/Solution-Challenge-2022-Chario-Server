@@ -1,6 +1,7 @@
 # Solution-Challenge-2022-Chario-Server
 
-##GiBOO
+## Chari-o (Donation to Charity)
+
 - Donating can make world better
 
 ##ERD 설계도
