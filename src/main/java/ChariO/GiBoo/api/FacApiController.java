@@ -37,10 +37,6 @@ public class FacApiController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR !!")
     })
 
-    /**
-     * 기관 리스트 제공
-     */
-
     @GetMapping(value = "/api/facilities", produces = "application/json;charset=UTF-8")
     public Result facilities(){
         List<Facility> findFacs = facService.findFacs();
@@ -60,10 +56,6 @@ public class FacApiController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND"),
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
-
-    /**
-     * 특정 기관 상세정보 조회
-     */
 
     @GetMapping(value = "/api/facility/{id}", produces = "application/json;charset=UTF-8")
     public DetailFacResponse findFacility(@PathVariable("id") Long id){
