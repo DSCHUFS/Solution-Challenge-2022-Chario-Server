@@ -40,7 +40,8 @@ public class FacApiController {
     /**
      * 기관 리스트 제공
      */
-    @GetMapping("/api/facilities")
+
+    @GetMapping(value = "/api/facilities", produces = "application/json;charset=UTF-8")
     public Result facilities(){
         List<Facility> findFacs = facService.findFacs();
         List<FacDto> collect = findFacs.stream()
@@ -63,7 +64,8 @@ public class FacApiController {
     /**
      * 특정 기관 상세정보 조회
      */
-    @GetMapping("/api/facility/{id}")
+
+    @GetMapping(value = "/api/facility/{id}", produces = "application/json;charset=UTF-8")
     public DetailFacResponse findFacility(@PathVariable("id") Long id){
         Facility facility = facService.findOne(id);
         List<ContentDto> collect = contentService.findByFac(id).stream()
