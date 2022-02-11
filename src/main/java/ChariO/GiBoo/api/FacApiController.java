@@ -2,7 +2,7 @@ package ChariO.GiBoo.api;
 
 import ChariO.GiBoo.domain.Contents;
 import ChariO.GiBoo.domain.Facility;
-import ChariO.GiBoo.service.ContentService;
+import ChariO.GiBoo.service.ConService;
 import ChariO.GiBoo.service.FacService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -24,7 +24,7 @@ import static ChariO.GiBoo.api.ContentApiController.*;
 public class FacApiController {
 
     private final FacService facService;
-    private final ContentService contentService;
+    private final ConService contentService;
 
     /**
      * Swagger 명세
