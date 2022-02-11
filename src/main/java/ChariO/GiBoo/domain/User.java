@@ -21,7 +21,7 @@ public class User {
     private String u_username;
     private String u_name;
     private String u_email;
-    private int u_phone;
+    private String u_phone;
     private int u_birth;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
