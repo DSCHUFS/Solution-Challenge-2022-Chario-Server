@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static ChariO.GiBoo.api.ContentApiController.*;
+import static ChariO.GiBoo.api.ConApiController.*;
 
 @RestController
 @RequiredArgsConstructor
