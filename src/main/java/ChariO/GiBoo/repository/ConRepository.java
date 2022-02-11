@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class ContentRepository {
+public class ConRepository {
 
     private final EntityManager em;
     private final FacRepository facRepository;
