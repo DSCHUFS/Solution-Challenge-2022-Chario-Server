@@ -10,7 +10,7 @@ import java.util.Date;
 
 @RestController
 @RequiredArgsConstructor
-public class ContentApiController {
+public class ConApiController {
 
 
     @Data
