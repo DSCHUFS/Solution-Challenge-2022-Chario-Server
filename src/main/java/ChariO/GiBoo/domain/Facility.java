@@ -45,4 +45,19 @@ public class Facility {
     @OneToMany(mappedBy = "facility", cascade = CascadeType.ALL)
     private List<FacilityCategory> facilityCategoryList = new ArrayList<>();
 
+
+    public void addDonation(Donation donation) {
+        this.donationList.add(donation);
+        donation.setFacility(this);
+    }
+
+    public void addSubscribe(Subscribe subscribe) {
+        this.subscribeList.add(subscribe);
+        subscribe.setFacility(this);
+    }
+
+    public void addCategory(FacilityCategory facilityCategory) {
+        this.facilityCategoryList.add(facilityCategory);
+        facilityCategory.setFacility(this);
+    }
 }
