@@ -1,6 +1,5 @@
 package ChariO.GiBoo.domain;
 
-import jdk.jfr.Category;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -37,5 +36,15 @@ public class User {
     public void addDonation(Donation donation) {
         this.donationList.add(donation);
         donation.setUser(this);
+    }
+
+    public void addSubscribe(Subscribe subscribe) {
+        this.subscribeList.add(subscribe);
+        subscribe.setUser(this);
+    }
+
+    public void addCategory(UserCategory userCategory) {
+        this.userCategoryList.add(userCategory);
+        userCategory.setUser(this);
     }
 }
