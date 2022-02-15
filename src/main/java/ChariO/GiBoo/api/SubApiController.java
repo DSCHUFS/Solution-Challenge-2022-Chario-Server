@@ -4,7 +4,6 @@ import ChariO.GiBoo.domain.Facility;
 import ChariO.GiBoo.domain.Subscribe;
 import ChariO.GiBoo.domain.User;
 import ChariO.GiBoo.service.SubService;
-import ChariO.GiBoo.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -12,13 +11,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static ChariO.GiBoo.api.UserApiController.*;
 
 
 @RestController
@@ -43,7 +39,7 @@ public class SubApiController {
     public SubResult subscribes(){
         List<Subscribe> findSubs = subscribeService.findSubs();
         List<SubDto> collect = findSubs.stream()
-                .map(s -> new SubDto(s))
+                .map(s -> new SubDto(s.getUser()))
                 .collect(Collectors.toList()); //Collector -> List convert
         return new SubResult(collect.size());
     }
