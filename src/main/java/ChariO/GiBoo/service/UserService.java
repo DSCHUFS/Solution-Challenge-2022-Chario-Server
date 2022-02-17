@@ -11,15 +11,16 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class UserService {
-
     private final UserRepository userRepository;
 
     @Transactional(readOnly = true)
-    public List<User> findAllUser() { return userRepository.findAll();}
-
+    public List<User> findUsers() {
+        return userRepository.findAll();
+    }
 
     @Transactional(readOnly = true)
-    public User findById(Long UserId){ return userRepository.findById(UserId);}
+    public User findOne(Long userid){
+        return userRepository.findOne(userid);
 
 
     @Transactional(readOnly = true)

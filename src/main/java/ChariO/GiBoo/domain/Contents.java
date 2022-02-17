@@ -1,5 +1,6 @@
 package ChariO.GiBoo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -26,6 +27,7 @@ public class Contents {
     @DateTimeFormat(pattern = "MM/dd/yyyy")
     private Date c_pub_date;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="f_id")
     private Facility facility;

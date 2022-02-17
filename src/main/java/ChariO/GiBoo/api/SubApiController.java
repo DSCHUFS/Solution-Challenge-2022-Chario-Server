@@ -1,6 +1,7 @@
 package ChariO.GiBoo.api;
 
 import ChariO.GiBoo.domain.Facility;
+import ChariO.GiBoo.domain.FacilityCategory;
 import ChariO.GiBoo.domain.Subscribe;
 import ChariO.GiBoo.domain.User;
 import ChariO.GiBoo.service.SubService;
@@ -17,9 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static ChariO.GiBoo.api.UserApiController.*;
-
 
 @RestController
 @RequiredArgsConstructor
@@ -40,12 +38,12 @@ public class SubApiController {
     })
 
     @GetMapping(value = "/api/subscribes", produces = "application/json;charset=UTF-8")
-    public SubResult subscribes(){
+    public SubResult subscribesAllv1(){
         List<Subscribe> findSubs = subscribeService.findSubs();
         List<SubDto> collect = findSubs.stream()
-                .map(s -> new SubDto(s))
+                .map(s -> new SubDto(s)) //Change to DTO
                 .collect(Collectors.toList()); //Collector -> List convert
-        return new SubResult(collect.size());
+        return new SubResult(collect.size(), collect);
     }
 
     /**
@@ -56,7 +54,7 @@ public class SubApiController {
     @AllArgsConstructor
     static class SubResult<T> {
         private int count;
-        //private T data;
+        private T data;
     }
 
 
@@ -66,15 +64,35 @@ public class SubApiController {
     @Data
     static class SubDto {
         private Long id;
-        private User user; //User객체 전체를 가져옴..ID만 가져 올 수 없는지
-        private Facility facility;
+        private User user;
+        private String f_name;
+        private String f_logo;
+        private String f_ars;
+        private String f_phone;
+        private String f_home;
+        private String f_pay;
+        private int f_minimal;
+        private String f_intro;
+        private List<FacilityCategory> facilityCategoryList;
 
         public SubDto(Subscribe s){
             this.id = s.getId();
+
+            //User
             this.user = s.getUser();
-            this.facility = s.getFacility();
+
+            //Facility
+            this.f_name = s.getFacility().getF_name();
+            this.f_logo = s.getFacility().getF_logo();
+            this.f_phone = s.getFacility().getF_phone();
+            this.f_home = s.getFacility().getF_home();
+            this.f_pay = s.getFacility().getF_pay();
+            this.f_minimal = s.getFacility().getF_minimal();
+            this.f_intro = s.getFacility().getF_intro();
+            this.facilityCategoryList = s.getFacility().getFacilityCategoryList();
         }
-    } //Query 가 너무 많이 조회되면서 Stackoverflow 발생;;
+    }
+
 
     /**
      * Subscribe 의 ID가 Response 값
@@ -84,31 +102,4 @@ public class SubApiController {
     static class GetSubResponse {
         private String id;
     }
-
-/**
-    @GetMapping(value = "/api/subscribes/{id}", produces = "application/json;charset=UTF-8")
-    public SubResult findsubscribes(@PathVariable("id") Long id){
-        Subscribe findById = subscribeService.findById(id);
-        List<UserDto> collect = userService.findById(id).stream().map(u -> new SubDto(u))
-                .collect(Collectors.toList()); //Collector -> List convert
-        return new SubResult(collect.size(), collect);
-    }
-
-    static class UserSubDto extends SubDto {
-        private List<User> UserList;
-
-        public UserSubDto(Subscribe subscribe){
-            super(subscribe);
-            this.UserList = subscribe.getUser();
-            System.out.println("User = " + subscribe);
-        }
-    }
-
-    @Data
-    @AllArgsConstructor
-    static class UserSubResponse<T>{
-        private SubDto subDto;
-        private T UserList;
-    }
-    **/
 }

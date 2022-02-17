@@ -1,5 +1,6 @@
 package ChariO.GiBoo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,6 +17,7 @@ public class FacilityCategory {
     @Column(name="f_cate_id") //PK
     private Long id;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="f_id")
     private Facility facility;
