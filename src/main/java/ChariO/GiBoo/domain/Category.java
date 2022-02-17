@@ -1,5 +1,6 @@
 package ChariO.GiBoo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,6 +20,7 @@ public class Category {
 
     private String cate_name;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private List<FacilityCategory> facilityCategoryList = new ArrayList<>();
 
@@ -27,7 +29,6 @@ public class Category {
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private List<CategoryContents> categoryContentsList = new ArrayList<>();
-
 
     public void addfacility(FacilityCategory facilityCategory) {
         this.facilityCategoryList.add(facilityCategory);
