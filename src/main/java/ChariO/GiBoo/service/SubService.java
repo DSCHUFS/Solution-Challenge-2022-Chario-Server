@@ -1,6 +1,5 @@
 package ChariO.GiBoo.service;
 
-import ChariO.GiBoo.domain.Facility;
 import ChariO.GiBoo.domain.Subscribe;
 import ChariO.GiBoo.domain.User;
 import ChariO.GiBoo.repository.SubRepository;
@@ -17,7 +16,7 @@ public class SubService {
     private final SubRepository subRepository;
 
     @Transactional(readOnly = true)
-    public List<Subscribe> findSub() { return subRepository.findAll();}
+    public List<Subscribe> findSubs() { return subRepository.findAll();}
 
     @Transactional(readOnly = true)
     public Subscribe findById(Long id) { return subRepository.findById(id); }
