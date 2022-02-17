@@ -6,7 +6,6 @@ import ChariO.GiBoo.domain.Subscribe;
 import ChariO.GiBoo.domain.User;
 import ChariO.GiBoo.service.SubService;
 import ChariO.GiBoo.service.UserService;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -14,11 +13,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
 
 @RestController
 @RequiredArgsConstructor
@@ -93,6 +92,7 @@ public class SubApiController {
             this.facilityCategoryList = s.getFacility().getFacilityCategoryList();
         }
     }
+
 
     /**
      * Subscribe 의 ID가 Response 값
