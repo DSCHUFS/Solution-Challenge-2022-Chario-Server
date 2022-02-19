@@ -1,5 +1,6 @@
 package ChariO.GiBoo.repository;
 
+import ChariO.GiBoo.domain.Facility;
 import ChariO.GiBoo.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +17,16 @@ public class UserRepository {
     @Autowired
     private final EntityManager em;
 
-    public void save(User user) {em.persist(user);}
+    public void save(User user) {
+        em.persist(user);
+    }
+
+    public List<User> findAll() {
+        return em.createQuery("select u from User u", User.class)
+                .getResultList();
+    }
 
     public User findOne(Long id) {
         return em.find(User.class, id);
     }
-
-    public List<User> findByUserName(String name) {
-        return em.createQuery("select u from User u where u.u_username = :name", User.class )
-        .setParameter("name", name).getResultList();
-    }
+}

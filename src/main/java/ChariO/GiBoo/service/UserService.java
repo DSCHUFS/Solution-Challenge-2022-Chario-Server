@@ -19,12 +19,7 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public User findOne(Long userid){
+    public User findOne(Long userid) {
         return userRepository.findOne(userid);
-
-
-    @Transactional(readOnly = true)
-    public User findByUserName(String UserName){
-        return userRepository.findByUserName(UserName);
     }
 }
