@@ -1,5 +1,6 @@
 package ChariO.GiBoo.repository;
 
+import ChariO.GiBoo.domain.Facility;
 import ChariO.GiBoo.domain.Subscribe;
 import ChariO.GiBoo.domain.User;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,18 @@ public class SubRepository {
                 .getResultList();
     }
 
+    public List<Subscribe> findByFacId(Long id){
+        return em.createQuery("select s from Subscribe s" +
+                " join fetch s.user u" +
+                " join fetch s.facility f" +
+                " where s.facility.id = :id ", Subscribe.class)
+                .setParameter("id", id)
+                .getResultList();
+    }
+
+    public void save(Subscribe subscribe) {
+        em.persist(subscribe);
+    }
 
     /**
      * @param id
@@ -43,4 +56,16 @@ public class SubRepository {
         return em.find(Subscribe.class, user);
     }
 
+    public void delete(Subscribe subscribe){
+        em.remove(subscribe);
+    }
+
+    public Subscribe findByUserFac(Long u_id, Long f_id){
+        return em.createQuery("select s from Subscribe s " +
+                "where s.user.id =: u_id " +
+                "and s.facility.id =: f_id ", Subscribe.class)
+                .setParameter("u_id", u_id)
+                .setParameter("f_id", f_id)
+                .getSingleResult();
+    }
 }

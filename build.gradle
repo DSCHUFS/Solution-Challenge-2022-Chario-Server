@@ -54,5 +54,5 @@ tasks.named('test') {
 bootJar {
 	archivesBaseName = 'GiBooApplication'
 	archiveFileName = 'Chario.jar'
-	archiveVersion = "1.0.0"
+	archiveVersion = "1.0.1"
 }
