@@ -3,6 +3,7 @@ package ChariO.GiBoo.repository;
 import ChariO.GiBoo.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -21,13 +22,7 @@ public class UserRepository {
         return em.find(User.class, id);
     }
 
-    public List<User> findAll() {
-        return em.createQuery("select u from User u", User.class)
-                .getResultList();
-    }
-
     public List<User> findByUserName(String name) {
         return em.createQuery("select u from User u where u.u_username = :name", User.class )
         .setParameter("name", name).getResultList();
     }
-}
