@@ -50,3 +50,9 @@ test {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+bootJar {
+	archivesBaseName = 'GiBooApplication'
+	archiveFileName = 'Chario.jar'
+	archiveVersion = "1.0.0"
+}
