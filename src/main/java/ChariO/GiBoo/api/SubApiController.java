@@ -4,20 +4,23 @@ import ChariO.GiBoo.domain.Facility;
 import ChariO.GiBoo.domain.FacilityCategory;
 import ChariO.GiBoo.domain.Subscribe;
 import ChariO.GiBoo.domain.User;
+import ChariO.GiBoo.dto.SubscribeDtos;
+import ChariO.GiBoo.service.FacService;
 import ChariO.GiBoo.service.SubService;
 import ChariO.GiBoo.service.UserService;
+import io.swagger.annotations.ResponseHeader;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static ChariO.GiBoo.dto.SubscribeDtos.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,6 +28,7 @@ public class SubApiController {
 
     private final SubService subscribeService;
     private final UserService userService;
+    private final FacService facService;
 
     /**
      * Swagger 명세
@@ -36,7 +40,6 @@ public class SubApiController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND !!"),
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR !!")
     })
-
     @GetMapping(value = "/api/subscribes", produces = "application/json;charset=UTF-8")
     public SubResult subscribesAllv1(){
         List<Subscribe> findSubs = subscribeService.findSubs();
@@ -47,59 +50,54 @@ public class SubApiController {
     }
 
     /**
-     * 결과 반환 Format
-     * @param <T>
+     * 현재 사용자가 신규 좋아요를 누름. + 해당 기관의 좋아요 개수
      */
-    @Data
-    @AllArgsConstructor
-    static class SubResult<T> {
-        private int count;
-        private T data;
-    }
-
-
-    /**
-     * Data 전송 전용 Obj
-     */
-    @Data
-    static class SubDto {
-        private Long id;
-        private User user;
-        private String f_name;
-        private String f_logo;
-        private String f_ars;
-        private String f_phone;
-        private String f_home;
-        private String f_pay;
-        private int f_minimal;
-        private String f_intro;
-        private List<FacilityCategory> facilityCategoryList;
-
-        public SubDto(Subscribe s){
-            this.id = s.getId();
-
-            //User
-            this.user = s.getUser();
-
-            //Facility
-            this.f_name = s.getFacility().getF_name();
-            this.f_logo = s.getFacility().getF_logo();
-            this.f_phone = s.getFacility().getF_phone();
-            this.f_home = s.getFacility().getF_home();
-            this.f_pay = s.getFacility().getF_pay();
-            this.f_minimal = s.getFacility().getF_minimal();
-            this.f_intro = s.getFacility().getF_intro();
-            this.facilityCategoryList = s.getFacility().getFacilityCategoryList();
+    @Operation(summary = "user post subscribe", description = "사용자가 해당 기관을 새로 구독하는 경우")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
+            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
+    })
+    @PostMapping(value = "/api/subscribe/{fac_id}", produces = "application/json;charset=UTF-8")
+    public subscribePostDeleteResponse subscribePost(@PathVariable("fac_id") Long f_id,
+                                              @RequestHeader("Authorization") Long u_id){
+        List<Subscribe> subsByFacId = subscribeService.findSubsByFacId(f_id);
+        long count = subsByFacId.stream().count();
+        if (subsByFacId.stream().anyMatch(s -> s.getUser().getId() == u_id)){
+            String status = "이미 좋아요를 하고 있습니다.";
+            return new subscribePostDeleteResponse(count, status);
         }
+        Subscribe subscribe = new Subscribe();
+        subscribe.setUser(userService.findOne(u_id));
+        subscribe.setFacility(facService.findOne(f_id));
+        subscribeService.newSubscribe(subscribe);
+        return new subscribePostDeleteResponse(count + 1, "정상적으로 저장되었습니다. ");
     }
 
 
     /**
-     * Subscribe 의 ID가 Response 값
+     * 현재 사용자가 좋아요 취소 + 해당 기관의 좋아요 수
      */
-    @Data
-    @AllArgsConstructor
-    static class GetSubResponse {
-        private String id;
+    @Operation(summary = "user unsubscribe", description = "사용자가 해당 기관을 구독 취소하는 경우")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
+            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
+    })
+    @DeleteMapping(value = "/api/subscribe/{fac_id}", produces = "application/json;charset=UTF-8")
+    public subscribePostDeleteResponse subscribeDelete(@PathVariable("fac_id") Long f_id,
+                                                       @RequestHeader("Authorization") Long u_id){
+        List<Subscribe> subsByFacId = subscribeService.findSubsByFacId(f_id);
+        if (subsByFacId.stream().anyMatch(s -> s.getUser().getId() == u_id)){
+            subscribeService.deleteByUserFac(u_id, f_id);
+            String status = "정상적으로 삭제되었습니다.";
+            long count = subsByFacId.stream().count();
+            return new subscribePostDeleteResponse(count, status);
+        }
+        String status = "존재하지 않는 구독입니다.";
+        long count = subsByFacId.stream().count();
+        return new subscribePostDeleteResponse(count, status);
     }
 }

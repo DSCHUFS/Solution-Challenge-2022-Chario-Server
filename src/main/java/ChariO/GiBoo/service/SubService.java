@@ -1,5 +1,6 @@
 package ChariO.GiBoo.service;
 
+import ChariO.GiBoo.domain.Facility;
 import ChariO.GiBoo.domain.Subscribe;
 import ChariO.GiBoo.domain.User;
 import ChariO.GiBoo.repository.SubRepository;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -23,4 +25,23 @@ public class SubService {
 
     @Transactional(readOnly = true)
     public Subscribe findByUser(User user) { return subRepository.findByUser(user); }
+
+    @Transactional(readOnly = true)
+    public List<Subscribe> findSubsByFacId(Long id) {return subRepository.findByFacId(id);}
+
+    @Transactional
+    public Optional<Subscribe> findSubByFacUser(Long u_id, Long f_id){
+        Subscribe subscribe = subRepository.findByUserFac(u_id, f_id);
+        Optional<Subscribe> result = Optional.of(subscribe);
+        return result;
+    }
+    @Transactional()
+    public void newSubscribe(Subscribe subscribe) {
+        subRepository.save(subscribe);
+    }
+    @Transactional
+    public void deleteByUserFac(Long u_id, Long f_id){
+        Subscribe subscribe = subRepository.findByUserFac(u_id, f_id);
+        subRepository.delete(subscribe);
+    }
 }
