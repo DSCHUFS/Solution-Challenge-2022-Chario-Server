@@ -5,6 +5,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+import static javax.persistence.FetchType.*;
+
 @Getter
 @Setter
 @Entity
@@ -16,11 +18,11 @@ public class Donation {
     @Column(name = "u_f_id")
     private Long Id;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name= "u_id")
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name="f_id")
     private Facility facility;
 

@@ -9,6 +9,7 @@ import lombok.Data;
 import java.util.List;
 
 public class SubscribeDtos {
+
     /**
      * 결과 반환 Format
      * @param <T>
@@ -56,10 +57,26 @@ public class SubscribeDtos {
         }
     }
 
+    @Data
+    public static class UserSubDto {
+        private Long id;
+        private String f_name;
+        private String f_logo;
+        private String f_intro;
+        private List<FacilityCategory> facilityCategoryList;
 
-    /**
-     * Subscribe 의 ID가 Response 값
-     */
+        public UserSubDto(Subscribe s){
+            this.id = s.getId();
+
+            //Facility
+            this.f_name = s.getFacility().getF_name();
+            this.f_logo = s.getFacility().getF_logo();
+            this.f_intro = s.getFacility().getF_intro();
+            this.facilityCategoryList = s.getFacility().getFacilityCategoryList();
+        }
+    }
+
+
     @Data
     @AllArgsConstructor
     public static class GetSubResponse {

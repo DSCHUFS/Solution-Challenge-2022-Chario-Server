@@ -6,6 +6,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+import static javax.persistence.FetchType.*;
+
 @Entity
 @Getter
 @Setter
@@ -18,11 +20,12 @@ public class FacilityCategory {
     private Long id;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name="f_id")
     private Facility facility;
 
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name="cate_id")
     private Category category;
 }

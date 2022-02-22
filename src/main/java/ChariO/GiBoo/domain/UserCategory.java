@@ -5,6 +5,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+import static javax.persistence.FetchType.*;
+
 @Entity
 @Getter
 @Setter
@@ -16,11 +18,11 @@ public class UserCategory {
     @Column(name="u_c_int_id") //PK
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name="u_id")
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name="cate_id")
     private Category category;
 
