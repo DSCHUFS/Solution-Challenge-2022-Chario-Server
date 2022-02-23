@@ -35,4 +35,18 @@ public class UserRepository {
                 .getResultList();
     }
 
+    /**테스트용**/
+    public List<User> findOne1(Long id,int offset, int limit) {
+        return em.createQuery("select distinct u from User u" +
+                        " join fetch u.subscribeList s" +
+                        " join s.facility f" +
+                        " join f.facilityCategoryList c" +
+                        " join c.category fc" +
+                        " where u.id = :id ", User.class)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
+                .setParameter("id", id)
+                .getResultList();
+    }
+
 }
