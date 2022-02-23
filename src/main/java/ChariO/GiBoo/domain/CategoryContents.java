@@ -5,9 +5,12 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+import static javax.persistence.FetchType.*;
+
 @Entity
 @Getter
 @Setter
+
 @Table(name="Category_Contents")
 public class CategoryContents {
 
@@ -16,11 +19,11 @@ public class CategoryContents {
     @Column(name= "cate_c_id") //PK
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "cate_id")
     private Category category;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "c_id")
     private Contents contents;
 }

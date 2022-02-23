@@ -40,17 +40,16 @@ public class SubRepository {
 
     /**
      * @param id
-     * @return 일치하는 ID의 구독 리스트
+     * @return 일치하는 ID의 구독 리스트 조회
      * 별 필요 없음
      */
     public Subscribe findById(Long id) {
         return em.find(Subscribe.class, id);
     }
 
-
     /**
      * @param user
-     * @return 일치하는 user의 구독 기관 리스트
+     * @return 일치하는 user의 구독 기관 리스트 조회
      */
     public Subscribe findByUser(User user) {
         return em.find(Subscribe.class, user);
@@ -60,6 +59,11 @@ public class SubRepository {
         em.remove(subscribe);
     }
 
+    /**
+     * @param u_id
+     * @param f_id
+     * @return User가 구독하는 기관 중 특정 기관 조회
+     */
     public Subscribe findByUserFac(Long u_id, Long f_id){
         return em.createQuery("select s from Subscribe s " +
                 "where s.user.id =: u_id " +

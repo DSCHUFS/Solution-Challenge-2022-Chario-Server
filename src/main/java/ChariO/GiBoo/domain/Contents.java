@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static javax.persistence.FetchType.LAZY;
+
 @Entity
 @Getter
 @Setter
@@ -28,7 +30,7 @@ public class Contents {
     private Date c_pub_date;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name="f_id")
     private Facility facility;
 

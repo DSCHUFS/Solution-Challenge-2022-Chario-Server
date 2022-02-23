@@ -35,10 +35,12 @@ public class SubService {
         Optional<Subscribe> result = Optional.of(subscribe);
         return result;
     }
+
     @Transactional()
     public void newSubscribe(Subscribe subscribe) {
         subRepository.save(subscribe);
     }
+
     @Transactional
     public void deleteByUserFac(Long u_id, Long f_id){
         Subscribe subscribe = subRepository.findByUserFac(u_id, f_id);

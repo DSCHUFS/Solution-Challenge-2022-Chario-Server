@@ -41,7 +41,7 @@ public class SubApiController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR !!")
     })
     @GetMapping(value = "/api/subscribes", produces = "application/json;charset=UTF-8")
-    public SubResult subscribesAllv1(){
+    public SubResult subscribesAll(){
         List<Subscribe> findSubs = subscribeService.findSubs();
         List<SubDto> collect = findSubs.stream()
                 .map(s -> new SubDto(s)) //Change to DTO
@@ -69,7 +69,7 @@ public class SubApiController {
             return new subscribePostDeleteResponse(count, status);
         }
         Subscribe subscribe = new Subscribe();
-        subscribe.setUser(userService.findOne(u_id));
+        subscribe.setUser((User) userService.findOne(u_id));
         subscribe.setFacility(facService.findOne(f_id));
         subscribeService.newSubscribe(subscribe);
         return new subscribePostDeleteResponse(count + 1, "정상적으로 저장되었습니다. ");
