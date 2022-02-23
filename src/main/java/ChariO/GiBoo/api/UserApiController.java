@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -55,8 +56,20 @@ public class UserApiController {
 
     @GetMapping(value="/api/users/{id}", produces="application/json;charset=UTF-8")
     public OneResult OneUser(@PathVariable("id") Long id) {
-
         List<User> userByID = userService.findOne(id);
+        List<EveryInfoUserDto> result = userByID.stream()
+                .map(u -> new EveryInfoUserDto(u))
+                .collect(Collectors.toList());
+        return new OneResult(result);
+    }
+
+    /**테스트용**/
+    @GetMapping(value="/api/users1/{id}", produces="application/json;charset=UTF-8")
+    public OneResult OneUser1(@PathVariable("id") Long id,
+                              @RequestParam(value="offset", defaultValue = "0") int offset,
+                              @RequestParam(value="limit", defaultValue = "100") int limit)
+    {
+        List<User> userByID = userService.findOne1(id, offset, limit);
         List<EveryInfoUserDto> result = userByID.stream()
                 .map(u -> new EveryInfoUserDto(u))
                 .collect(Collectors.toList());
