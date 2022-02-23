@@ -1,5 +1,6 @@
 package ChariO.GiBoo.dto;
 
+import ChariO.GiBoo.domain.Subscribe;
 import ChariO.GiBoo.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
