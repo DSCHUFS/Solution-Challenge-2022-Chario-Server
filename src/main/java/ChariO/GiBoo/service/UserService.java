@@ -23,4 +23,8 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public List<User> findOne(Long userid) { return userRepository.findOne(userid); }
+
+    /**TEST용**/
+    @Transactional(readOnly = true)
+    public List<User> findOne1(Long userid, int offset, int limit) { return userRepository.findOne1(userid, offset, limit); }
 }

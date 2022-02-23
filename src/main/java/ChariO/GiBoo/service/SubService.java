@@ -1,6 +1,5 @@
 package ChariO.GiBoo.service;
 
-import ChariO.GiBoo.domain.Facility;
 import ChariO.GiBoo.domain.Subscribe;
 import ChariO.GiBoo.domain.User;
 import ChariO.GiBoo.repository.SubRepository;
