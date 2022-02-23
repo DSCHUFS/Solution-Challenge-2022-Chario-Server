@@ -10,6 +10,4 @@ public class GiBooApplication {
 		SpringApplication.run(GiBooApplication.class, args);
 	}
 
-
-
 }

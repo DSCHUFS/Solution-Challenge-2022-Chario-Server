@@ -7,6 +7,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static ChariO.GiBoo.dto.FacCateDtos.*;
 
 public class SubscribeDtos {
 
@@ -63,7 +66,7 @@ public class SubscribeDtos {
         private String f_name;
         private String f_logo;
         private String f_intro;
-        private List<FacilityCategory> facilityCategoryList;
+        private List<FacCateDto> facilityCategory;
 
         public UserSubDto(Subscribe s){
             this.id = s.getId();
@@ -72,7 +75,10 @@ public class SubscribeDtos {
             this.f_name = s.getFacility().getF_name();
             this.f_logo = s.getFacility().getF_logo();
             this.f_intro = s.getFacility().getF_intro();
-            this.facilityCategoryList = s.getFacility().getFacilityCategoryList();
+            this.facilityCategory = s.getFacility().getFacilityCategoryList()
+                    .stream()
+                    .map(facilityCategory -> new FacCateDto(facilityCategory))
+                    .collect(Collectors.toList());
         }
     }
 
