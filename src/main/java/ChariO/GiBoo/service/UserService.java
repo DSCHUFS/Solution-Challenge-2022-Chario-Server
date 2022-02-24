@@ -15,6 +15,10 @@ public class UserService {
 
     @Autowired
     private final UserRepository userRepository;
+    //private final User user;
+
+    //@Transactional
+    //public User userSave(user) {return userRepository.save(user);}
 
     @Transactional(readOnly = true)
     public List<User> findUsers() {
@@ -27,4 +31,9 @@ public class UserService {
     /**TEST용**/
     @Transactional(readOnly = true)
     public List<User> findOne1(Long userid, int offset, int limit) { return userRepository.findOne1(userid, offset, limit); }
+
+    //@Transactional(readOnly = true)
+    //public void delete(Long userid) { return userRepository.deleteById(userid)};
+    //public post
+    //public save?
 }

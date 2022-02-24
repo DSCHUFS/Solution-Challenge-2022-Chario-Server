@@ -1,7 +1,6 @@
 package ChariO.GiBoo.api;
 
 import ChariO.GiBoo.domain.User;
-import ChariO.GiBoo.repository.UserRepository;
 import ChariO.GiBoo.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -22,6 +21,24 @@ import static ChariO.GiBoo.dto.UserDtos.*;
 public class UserApiController {
 
     private final UserService userService;
+
+    /**
+     * User 저장
+     * @return
+     */
+    /**
+    @Operation(summary = "Save user", description = "유저리스트")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK !!"),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST !!"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND !!"),
+            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR !!")
+    })
+    @GetMapping(value="/api/user", produces= "application/json;charset=UTF-8")
+    public void userSave() {
+        User userSave = userService.userSave();
+
+    }**/
 
     /**
      * 전체 Userlist 조회
@@ -54,7 +71,7 @@ public class UserApiController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR !!")
     })
 
-    @GetMapping(value="/api/users/{id}", produces="application/json;charset=UTF-8")
+    @GetMapping(value="/api/user/{id}", produces="application/json;charset=UTF-8")
     public OneResult OneUser(@PathVariable("id") Long id) {
         List<User> userByID = userService.findOne(id);
         List<EveryInfoUserDto> result = userByID.stream()
@@ -64,7 +81,7 @@ public class UserApiController {
     }
 
     /**테스트용**/
-    @GetMapping(value="/api/users1/{id}", produces="application/json;charset=UTF-8")
+    @GetMapping(value="/api/user1/{id}", produces="application/json;charset=UTF-8")
     public OneResult OneUser1(@PathVariable("id") Long id,
                               @RequestParam(value="offset", defaultValue = "0") int offset,
                               @RequestParam(value="limit", defaultValue = "100") int limit)
@@ -75,5 +92,7 @@ public class UserApiController {
                 .collect(Collectors.toList());
         return new OneResult(result);
     }
+
+
 
 }

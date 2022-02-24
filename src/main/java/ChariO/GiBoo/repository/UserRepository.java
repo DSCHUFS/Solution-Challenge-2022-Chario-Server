@@ -25,8 +25,6 @@ public class UserRepository {
                 .getResultList();
     }
 
-    //public User findOne(Long id) {return em.find(User.class, id);}
-
     public List<User> findOne(Long id) {
         return em.createQuery("select distinct u from User u" +
                 " join fetch u.subscribeList s" +
@@ -49,4 +47,8 @@ public class UserRepository {
                 .getResultList();
     }
 
+
+    //public void deleteById(Long userid) {}
+
+    //public void delte(User user) {}
 }

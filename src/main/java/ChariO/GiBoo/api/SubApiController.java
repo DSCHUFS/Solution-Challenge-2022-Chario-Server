@@ -30,9 +30,6 @@ public class SubApiController {
     private final UserService userService;
     private final FacService facService;
 
-    /**
-     * Swagger 명세
-     */
     @Operation(summary = "subscribe list", description = "구독리스트")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK !!"),
