@@ -68,11 +68,11 @@ public class SubscribeDtos {
 
     @Data
     public static class subscribePostDeleteResponse {
-        Long count;
+        Long fac_count;
         String status;
 
         public subscribePostDeleteResponse(Long cnt, String status){
-            this.count = cnt;
+            this.fac_count = cnt;
             this.status = status;
         }
     }
