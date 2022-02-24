@@ -30,6 +30,6 @@ public class Donation {
     private int donationPrice;
 
     @Column(name="don_date")
-    private int donationDate;
+    private String donationDate;
 
 }
