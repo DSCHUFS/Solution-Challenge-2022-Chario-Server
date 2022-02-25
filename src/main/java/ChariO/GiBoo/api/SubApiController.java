@@ -66,7 +66,7 @@ public class SubApiController {
             return new subscribePostDeleteResponse(count, status);
         }
         Subscribe subscribe = new Subscribe();
-        subscribe.setUser((User) userService.findOne(u_id));
+        subscribe.setUser(userService.findOne(u_id));
         subscribe.setFacility(facService.findOne(f_id));
         subscribeService.newSubscribe(subscribe);
         return new subscribePostDeleteResponse(count + 1, "정상적으로 저장되었습니다. ");
@@ -90,7 +90,7 @@ public class SubApiController {
         if (subsByFacId.stream().anyMatch(s -> s.getUser().getId() == u_id)){
             subscribeService.deleteByUserFac(u_id, f_id);
             String status = "정상적으로 삭제되었습니다.";
-            long count = subsByFacId.stream().count();
+            long count = subsByFacId.size();
             return new subscribePostDeleteResponse(count, status);
         }
         String status = "존재하지 않는 구독입니다.";

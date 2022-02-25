@@ -6,10 +6,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -60,7 +57,7 @@ public class UserApiController {
     }
 
     /**
-     * @param id
+     * @Header u_id
      * @return User 한명 조회
      */
     @Operation(summary = "Get user by id", description = "Id로 유저 찾기")
@@ -71,28 +68,23 @@ public class UserApiController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR !!")
     })
 
-    @GetMapping(value="/api/user/{id}", produces="application/json;charset=UTF-8")
-    public OneResult OneUser(@PathVariable("id") Long id) {
-        List<User> userByID = userService.findOne(id);
-        List<EveryInfoUserDto> result = userByID.stream()
-                .map(u -> new EveryInfoUserDto(u))
-                .collect(Collectors.toList());
-        return new OneResult(result);
+    @GetMapping(value="/api/user/", produces="application/json;charset=UTF-8")
+    public EveryInfoUserDto OneUser(@RequestHeader("Authorization") Long u_id) {
+        User userByID = userService.findOne(u_id);
+        EveryInfoUserDto result = new EveryInfoUserDto(userByID);
+        return result;
     }
 
     /**테스트용**/
-    @GetMapping(value="/api/user1/{id}", produces="application/json;charset=UTF-8")
-    public OneResult OneUser1(@PathVariable("id") Long id,
+    @GetMapping(value="/api/user1/", produces="application/json;charset=UTF-8")
+    public OneResult OneUser1(@RequestHeader("Authorization") Long u_id,
                               @RequestParam(value="offset", defaultValue = "0") int offset,
                               @RequestParam(value="limit", defaultValue = "100") int limit)
     {
-        List<User> userByID = userService.findOne1(id, offset, limit);
+        List<User> userByID = userService.findOne1(u_id, offset, limit);
         List<EveryInfoUserDto> result = userByID.stream()
                 .map(u -> new EveryInfoUserDto(u))
                 .collect(Collectors.toList());
         return new OneResult(result);
     }
-
-
-
 }
