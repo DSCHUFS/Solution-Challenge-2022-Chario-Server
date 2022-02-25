@@ -1,5 +1,6 @@
 package ChariO.GiBoo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,6 +21,7 @@ public class Donation {
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name= "u_id")
+    @JsonIgnore
     private User user;
 
     @ManyToOne(fetch = LAZY)
