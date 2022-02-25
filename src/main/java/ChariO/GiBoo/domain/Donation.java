@@ -1,6 +1,7 @@
 package ChariO.GiBoo.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +13,7 @@ import static javax.persistence.FetchType.*;
 @Setter
 @Entity
 @Table(name="User_Don")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Donation {
 
     @Id
@@ -21,7 +23,6 @@ public class Donation {
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name= "u_id")
-    @JsonIgnore
     private User user;
 
     @ManyToOne(fetch = LAZY)
