@@ -66,4 +66,6 @@ public class FacApiController {
                 .collect(Collectors.toList());
         return new DetailFacResponse(new FacDto(facility), collect);
     }
+
+
 }
