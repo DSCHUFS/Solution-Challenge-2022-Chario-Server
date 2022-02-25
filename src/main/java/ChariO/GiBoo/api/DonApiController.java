@@ -38,6 +38,9 @@ public class DonApiController {
         List<DonDto> collect = donsByUserId.stream()
                 .map(d -> new DonDto(d))
                 .collect(Collectors.toList());
-        return new DonResult(collect.size(), collect, status);
+        Long total_price = collect.stream()
+                .map(x -> x.getU_m_price())
+                .collect(Collectors.summingLong(Integer::longValue));
+        return new DonResult(collect.size(), total_price, collect, status);
     }
 }

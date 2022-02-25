@@ -10,23 +10,28 @@ public class DonDtos {
     @Data
     @AllArgsConstructor
     public static class DonResult<T> {
-        private int count;
+        private int fac_count;
+        private Long total_price;
         private T data;
         private String status;
     }
 
     @Data
     public static class DonDto{
-        private Long id;
+        private Long f_id;
+        private String f_name;
+        private String f_logo;
         private int u_m_price;
         private String don_date;
-        private Long f_id;
+
 
         public DonDto(Donation d){
-            this.id = d.getId();
+            this.f_id = d.getFacility().getId();
+            this.f_name = d.getFacility().getF_name();
+            this.f_logo = d.getFacility().getF_logo();
             this.u_m_price = d.getDonationPrice();
             this.don_date = d.getDonationDate();
-            this.f_id = d.getFacility().getId();
+
         }
     }
 }

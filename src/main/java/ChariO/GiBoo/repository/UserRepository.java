@@ -25,12 +25,12 @@ public class UserRepository {
                 .getResultList();
     }
 
-    public List<User> findOne(Long id) {
+    public User findOne(Long id) {
         return em.createQuery("select distinct u from User u" +
                 " join fetch u.subscribeList s" +
                 " where u.id = :id ", User.class)
                 .setParameter("id", id)
-                .getResultList();
+                .getSingleResult();
     }
 
     /**테스트용**/

@@ -16,7 +16,9 @@ public class DonRepository {
     private EntityManager em;
 
     public List<Donation> userDonateAll(Long id) {
-        return em.createQuery(" select d from Donation d where d.user = :id"
+        return em.createQuery(" select d from Donation d " +
+                "join fetch d.facility f " +
+                "where d.user.id = :id"
         , Donation.class)
                 .setParameter("id", id)
                 .getResultList();
