@@ -67,6 +67,13 @@ public class UserApiController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND !!"),
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR !!")
     })
+    @GetMapping(value = "/api/user/v1/", produces = "application/json;charset=UTF-8")
+    public OneUserResponse oneUser(@RequestHeader("Authorization") Long u_id){
+        User user = userService.findOne(u_id);
+        OneUserResponse oneUserResponse = new OneUserResponse(user);
+        return oneUserResponse;
+    }
+
 
     @GetMapping(value="/api/user/", produces="application/json;charset=UTF-8")
     public EveryInfoUserDto OneUser(@RequestHeader("Authorization") Long u_id) {

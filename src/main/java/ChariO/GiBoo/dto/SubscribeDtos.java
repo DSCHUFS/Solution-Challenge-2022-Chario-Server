@@ -30,8 +30,7 @@ public class SubscribeDtos {
      */
     @Data
     public static class SubDto {
-        private Long id;
-        private User user;
+        private Long f_id;
         private String f_name;
         private String f_logo;
         private String f_ars;
@@ -43,12 +42,10 @@ public class SubscribeDtos {
         private List<FacilityCategory> facilityCategoryList;
 
         public SubDto(Subscribe s){
-            this.id = s.getId();
 
-            //User
-            this.user = s.getUser();
 
             //Facility
+            this.f_id = s.getFacility().getId();
             this.f_name = s.getFacility().getF_name();
             this.f_logo = s.getFacility().getF_logo();
             this.f_phone = s.getFacility().getF_phone();
@@ -90,13 +87,24 @@ public class SubscribeDtos {
     }
 
     @Data
-    public static class subscribePostDeleteResponse {
+    public static class SubscribePostDeleteResponse {
         Long fac_count;
         String status;
 
-        public subscribePostDeleteResponse(Long cnt, String status){
+        public SubscribePostDeleteResponse(Long cnt, String status){
             this.fac_count = cnt;
             this.status = status;
+        }
+    }
+
+    @Data
+    public static class UserSubResponse {
+        int sub_count;
+        List<SubDto> sub_list;
+
+        public UserSubResponse(int cnt, List<SubDto> sub_list){
+            this.sub_count = cnt;
+            this.sub_list = sub_list;
         }
     }
 }

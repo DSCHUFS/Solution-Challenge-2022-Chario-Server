@@ -46,6 +46,15 @@ public class SubApiController {
         return new SubResult(collect.size(), collect);
     }
 
+    @GetMapping(value = "/api/subscribe/", produces = "application/json;charset=UTF-8")
+    public UserSubResponse userSubscibe(@RequestHeader("Authorization") Long u_id){
+        List<Subscribe> subscribeList = subscribeService.findByUser(u_id);
+        List<SubDto> collect = subscribeList.stream()
+                .map(s -> new SubDto(s))
+                .collect(Collectors.toList());
+        return new UserSubResponse(collect.size(), collect);
+    }
+
     /**
      * 현재 사용자가 신규 좋아요를 누름. + 해당 기관의 좋아요 개수
      */
@@ -57,19 +66,19 @@ public class SubApiController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @PostMapping(value = "/api/subscribe/{fac_id}", produces = "application/json;charset=UTF-8")
-    public subscribePostDeleteResponse subscribePost(@PathVariable("fac_id") Long f_id,
+    public SubscribePostDeleteResponse subscribePost(@PathVariable("fac_id") Long f_id,
                                               @RequestHeader("Authorization") Long u_id){
         List<Subscribe> subsByFacId = subscribeService.findSubsByFacId(f_id);
         long count = subsByFacId.stream().count();
         if (subsByFacId.stream().anyMatch(s -> s.getUser().getId() == u_id)){
             String status = "이미 좋아요를 하고 있습니다.";
-            return new subscribePostDeleteResponse(count, status);
+            return new SubscribePostDeleteResponse(count, status);
         }
         Subscribe subscribe = new Subscribe();
         subscribe.setUser(userService.findOne(u_id));
         subscribe.setFacility(facService.findOne(f_id));
         subscribeService.newSubscribe(subscribe);
-        return new subscribePostDeleteResponse(count + 1, "정상적으로 저장되었습니다. ");
+        return new SubscribePostDeleteResponse(count + 1, "정상적으로 저장되었습니다. ");
     }
 
 
@@ -84,17 +93,17 @@ public class SubApiController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @DeleteMapping(value = "/api/subscribe/{fac_id}", produces = "application/json;charset=UTF-8")
-    public subscribePostDeleteResponse subscribeDelete(@PathVariable("fac_id") Long f_id,
+    public SubscribePostDeleteResponse subscribeDelete(@PathVariable("fac_id") Long f_id,
                                                        @RequestHeader("Authorization") Long u_id){
         List<Subscribe> subsByFacId = subscribeService.findSubsByFacId(f_id);
         if (subsByFacId.stream().anyMatch(s -> s.getUser().getId() == u_id)){
             subscribeService.deleteByUserFac(u_id, f_id);
             String status = "정상적으로 삭제되었습니다.";
             long count = subsByFacId.size();
-            return new subscribePostDeleteResponse(count, status);
+            return new SubscribePostDeleteResponse(count, status);
         }
         String status = "존재하지 않는 구독입니다.";
         long count = subsByFacId.stream().count();
-        return new subscribePostDeleteResponse(count, status);
+        return new SubscribePostDeleteResponse(count, status);
     }
 }

@@ -69,4 +69,19 @@ public class UserDtos {
         private String id;
     }
 
+    @Data
+    public static class OneUserResponse {
+        private String u_username;
+        private String u_name;
+        private String u_email;
+        private String u_phone;
+        private String u_birth;
+        public OneUserResponse(User user) {
+            this.u_username = user.getU_username();
+            this.u_name = user.getU_name();
+            this.u_email = user.getU_email();
+            this.u_phone = user.getU_phone();
+            this.u_birth = user.getU_birth();
+        }
+    }
 }

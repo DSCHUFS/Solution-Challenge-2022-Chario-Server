@@ -23,7 +23,7 @@ public class SubService {
     public Subscribe findById(Long id) { return subRepository.findById(id); }
 
     @Transactional(readOnly = true)
-    public Subscribe findByUser(User user) { return subRepository.findByUser(user); }
+    public List<Subscribe> findByUser(Long u_id) { return subRepository.findByUser(u_id); }
 
     @Transactional(readOnly = true)
     public List<Subscribe> findSubsByFacId(Long id) {return subRepository.findByFacId(id);}
