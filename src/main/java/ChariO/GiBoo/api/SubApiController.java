@@ -49,8 +49,8 @@ public class SubApiController {
     @GetMapping(value = "/api/subscribe/", produces = "application/json;charset=UTF-8")
     public UserSubResponse userSubscibe(@RequestHeader("Authorization") Long u_id){
         List<Subscribe> subscribeList = subscribeService.findByUser(u_id);
-        List<SubDto> collect = subscribeList.stream()
-                .map(s -> new SubDto(s))
+        List<UserSubDto> collect = subscribeList.stream()
+                .map(s -> new UserSubDto(s))
                 .collect(Collectors.toList());
         return new UserSubResponse(collect.size(), collect);
     }
