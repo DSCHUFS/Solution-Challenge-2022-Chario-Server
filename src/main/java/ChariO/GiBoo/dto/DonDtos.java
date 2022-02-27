@@ -5,6 +5,8 @@ import ChariO.GiBoo.repository.DonRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import javax.validation.constraints.NotEmpty;
+
 public class DonDtos {
 
     @Data
@@ -24,7 +26,6 @@ public class DonDtos {
         private int u_m_price;
         private String don_date;
 
-
         public DonDto(Donation d){
             this.f_id = d.getFacility().getId();
             this.f_name = d.getFacility().getF_name();
@@ -34,4 +35,62 @@ public class DonDtos {
 
         }
     }
+
+    /**
+     * DonPost
+     */
+    @Data
+    public static class DonPostRequest {
+        @NotEmpty private String f_name;
+        @NotEmpty private int donationPrice;
+        @NotEmpty private String donationDate;
+    }
+
+    @Data
+    public static class DonPostResponse {
+        private Donation donation;
+        private String status;
+
+        public DonPostResponse(Donation donation, String status) {
+            this.donation = donation;
+            this.status = status;
+        }
+    }
+
+    /**
+     * DonPut
+     */
+    @Data
+    public static class DonPutRequest {
+        @NotEmpty private String f_name;
+                  private int price;
+                  private String don_date;
+    }
+
+    @Data
+    public static class DonPutResponse{
+        private String status;
+
+        public DonPutResponse(String status) {
+            this.status = status;
+        }
+    }
+
+    /**
+     * DonDelete
+     */
+    @Data
+    public static class DonDeleteRequest {
+        private String f_name;
+    }
+
+    @Data
+    public static class DonDeleteResponse {
+        private String status;
+
+        public DonDeleteResponse(String status) {
+            this.status = status;
+        }
+    }
+
 }
