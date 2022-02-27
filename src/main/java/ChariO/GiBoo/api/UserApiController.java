@@ -8,7 +8,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static ChariO.GiBoo.dto.UserDtos.*;
@@ -62,10 +64,10 @@ public class UserApiController {
      */
     @Operation(summary = "Get user by id", description = "Id로 유저 찾기")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "OK !!"),
-            @ApiResponse(responseCode = "400", description = "BAD REQUEST !!"),
-            @ApiResponse(responseCode = "404", description = "NOT FOUND !!"),
-            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR !!")
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
+            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @GetMapping(value = "/api/user/", produces = "application/json;charset=UTF-8")
     public OneUserResponse oneUser(@RequestHeader("Authorization") Long u_id){
@@ -85,5 +87,38 @@ public class UserApiController {
                 .map(u -> new EveryInfoUserDto(u))
                 .collect(Collectors.toList());
         return new OneResult(result);
+    }
+
+    @Operation(summary = "사용자 정보 수정", description = "본인만 접근 가능, name, email, phone 필드가 모두 있어야 request 가능")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "빈 필드가 있습니다."),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
+            @ApiResponse(responseCode = "500", description = "존재하는 회원이 없습니다.")
+    })
+    @PutMapping(value = "/api/user/", produces="application/json;charset=UTF-8")
+    public UserPutResponse userPut(@RequestHeader("Authorization") Long u_id,
+                                   @Valid @RequestBody UserPutRequest request){
+        User user = userService.updateOne(u_id, request.getName(), request.getEmail(), request.getPhone());
+        String status = "변경 사항이 저장되었습니다.";
+        return new UserPutResponse(user, status);
+    }
+
+    /**
+     * @Header u_id
+     * @return status
+     */
+    @Operation(summary = "유저 삭제", description = "정상적인 삭제 완료 시, '회원 정보가 삭제되었습니다' 확인 가능.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
+            @ApiResponse(responseCode = "500", description = "존재하는 회원이 없습니다.")
+    })
+    @DeleteMapping(value = "/api/user/", produces="application/json;charset=UTF-8")
+    public UserDeleteResponse userDelete(@RequestHeader("Authorization") Long u_id){
+        userService.deleteOne(u_id);
+        String status = "회원 정보가 삭제되었습니다.";
+        return new UserDeleteResponse(status);
     }
 }

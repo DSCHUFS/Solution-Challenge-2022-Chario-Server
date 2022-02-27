@@ -5,6 +5,7 @@ import ChariO.GiBoo.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -82,6 +83,30 @@ public class UserDtos {
             this.u_email = user.getU_email();
             this.u_phone = user.getU_phone();
             this.u_birth = user.getU_birth();
+        }
+    }
+
+    @Data
+    public static class UserPutRequest{
+        @NotEmpty private String email;
+        @NotEmpty private String name;
+        @NotEmpty private String phone;
+    }
+
+    public static class UserPutResponse extends OneUserResponse{
+        private String status;
+
+        public UserPutResponse(User user, String status) {
+            super(user);
+            this.status = status;
+        }
+    }
+
+    @Data
+    public static class UserDeleteResponse{
+        private String status;
+        public UserDeleteResponse(String status){
+            this.status = status;
         }
     }
 }

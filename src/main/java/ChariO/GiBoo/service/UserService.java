@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class UserService {
 
     @Autowired
@@ -20,20 +22,24 @@ public class UserService {
     //@Transactional
     //public User userSave(user) {return userRepository.save(user);}
 
-    @Transactional(readOnly = true)
     public List<User> findUsers() {
         return userRepository.findAll();
     }
 
-    @Transactional(readOnly = true)
     public User findOne(Long userid) { return userRepository.findOne(userid); }
 
     /**TEST용**/
-    @Transactional(readOnly = true)
     public List<User> findOne1(Long userid, int offset, int limit) { return userRepository.findOne1(userid, offset, limit); }
 
-    //@Transactional(readOnly = true)
-    //public void delete(Long userid) { return userRepository.deleteById(userid)};
+    @Transactional
+    public User updateOne(Long u_id, String u_name, String u_email, String u_phone){
+        return userRepository.update(u_id, u_name, u_email, u_phone);
+    }
+
+    @Transactional
+    public void deleteOne(Long u_id) {
+        userRepository.delete(u_id);
+    }
     //public post
     //public save?
 }
