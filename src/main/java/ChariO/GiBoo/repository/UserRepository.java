@@ -1,5 +1,6 @@
 package ChariO.GiBoo.repository;
 
+import ChariO.GiBoo.domain.Facility;
 import ChariO.GiBoo.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,11 @@ public class UserRepository {
                 .getResultList();
     }
 
-    public User findOne(Long id) {
+    public User findOne(Long id){
+        return em.find(User.class, id);
+    }
+
+    public User findUserSubscribe(Long id) {
         return em.createQuery("select distinct u from User u" +
                 " join fetch u.subscribeList s" +
                 " where u.id = :id ", User.class)
@@ -46,8 +51,6 @@ public class UserRepository {
                 .setParameter("id", id)
                 .getResultList();
     }
-
-
     //public void deleteById(Long userid) {}
 
     //public void delte(User user) {}

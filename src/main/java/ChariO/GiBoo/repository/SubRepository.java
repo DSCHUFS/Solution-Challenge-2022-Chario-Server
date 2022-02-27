@@ -49,11 +49,15 @@ public class SubRepository {
     }
 
     /**
-     * @param user
+     * @param u_id
      * @return 일치하는 user의 구독 기관 리스트 조회
      */
-    public Subscribe findByUser(User user) {
-        return em.find(Subscribe.class, user);
+    public List<Subscribe> findByUser(Long u_id) {
+        return em.createQuery("select s from Subscribe  s " +
+                "join fetch s.facility f " +
+                "where s.user.id = :u_id ", Subscribe.class)
+                .setParameter("u_id", u_id)
+                .getResultList();
     }
 
     public void delete(Subscribe subscribe){

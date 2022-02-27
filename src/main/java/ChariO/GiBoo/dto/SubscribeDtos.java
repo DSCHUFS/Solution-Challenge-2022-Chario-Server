@@ -30,7 +30,7 @@ public class SubscribeDtos {
      */
     @Data
     public static class SubDto {
-        private Long id;
+        private Long s_id;
         private User user;
         private String f_name;
         private String f_logo;
@@ -43,7 +43,7 @@ public class SubscribeDtos {
         private List<FacilityCategory> facilityCategoryList;
 
         public SubDto(Subscribe s){
-            this.id = s.getId();
+            this.s_id = s.getId();
 
             //User
             this.user = s.getUser();
@@ -62,23 +62,16 @@ public class SubscribeDtos {
 
     @Data
     public static class UserSubDto {
-        private Long id;
+        private Long f_id;
         private String f_name;
         private String f_logo;
-        private String f_intro;
-        private List<FacCateDto> facilityCategory;
 
         public UserSubDto(Subscribe s){
-            this.id = s.getId();
+            this.f_id = s.getFacility().getId();
 
             //Facility
             this.f_name = s.getFacility().getF_name();
             this.f_logo = s.getFacility().getF_logo();
-            this.f_intro = s.getFacility().getF_intro();
-            this.facilityCategory = s.getFacility().getFacilityCategoryList()
-                    .stream()
-                    .map(facilityCategory -> new FacCateDto(facilityCategory))
-                    .collect(Collectors.toList());
         }
     }
 
@@ -90,13 +83,24 @@ public class SubscribeDtos {
     }
 
     @Data
-    public static class subscribePostDeleteResponse {
+    public static class SubscribePostDeleteResponse {
         Long fac_count;
         String status;
 
-        public subscribePostDeleteResponse(Long cnt, String status){
+        public SubscribePostDeleteResponse(Long cnt, String status){
             this.fac_count = cnt;
             this.status = status;
+        }
+    }
+
+    @Data
+    public static class UserSubResponse {
+        int sub_count;
+        List<UserSubDto> sub_list;
+
+        public UserSubResponse(int cnt, List<UserSubDto> sub_list){
+            this.sub_count = cnt;
+            this.sub_list = sub_list;
         }
     }
 }
