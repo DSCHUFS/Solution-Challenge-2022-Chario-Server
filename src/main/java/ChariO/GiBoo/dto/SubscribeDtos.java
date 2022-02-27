@@ -31,6 +31,7 @@ public class SubscribeDtos {
     @Data
     public static class SubDto {
         private Long s_id;
+        private User user;
         private String f_name;
         private String f_logo;
         private String f_ars;
@@ -43,6 +44,9 @@ public class SubscribeDtos {
 
         public SubDto(Subscribe s){
             this.s_id = s.getId();
+
+            //User
+            this.user = s.getUser();
 
             //Facility
             this.f_name = s.getFacility().getF_name();

@@ -1,19 +1,12 @@
 package ChariO.GiBoo.api;
 
-import ChariO.GiBoo.domain.Facility;
-import ChariO.GiBoo.domain.FacilityCategory;
 import ChariO.GiBoo.domain.Subscribe;
-import ChariO.GiBoo.domain.User;
-import ChariO.GiBoo.dto.SubscribeDtos;
 import ChariO.GiBoo.service.FacService;
 import ChariO.GiBoo.service.SubService;
 import ChariO.GiBoo.service.UserService;
-import io.swagger.annotations.ResponseHeader;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,6 +23,7 @@ public class SubApiController {
     private final UserService userService;
     private final FacService facService;
 
+/*  전체 구독 DB 조회 -> 불필요하므로 주석 처리
     @Operation(summary = "subscribe list", description = "구독리스트")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK !!"),
@@ -44,10 +38,17 @@ public class SubApiController {
                 .map(s -> new SubDto(s)) //Change to DTO
                 .collect(Collectors.toList()); //Collector -> List convert
         return new SubResult(collect.size(), collect);
-    }
+    }*/
 
+    @Operation(summary = "subscribe list per user", description = "구독리스트")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
+            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
+    })
     @GetMapping(value = "/api/subscribe/", produces = "application/json;charset=UTF-8")
-    public UserSubResponse userSubscibe(@RequestHeader("Authorization") Long u_id){
+    public UserSubResponse userSubscribe(@RequestHeader("Authorization") Long u_id){
         List<Subscribe> subscribeList = subscribeService.findByUser(u_id);
         List<UserSubDto> collect = subscribeList.stream()
                 .map(s -> new UserSubDto(s))
