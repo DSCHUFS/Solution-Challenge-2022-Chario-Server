@@ -20,6 +20,13 @@ spring:
   profiles:
     active: prod
 
-logging.level:
-  org.hibernate.SQL: debug
+#logging.level:
+  #org.hibernate.SQL: debug
   # org.hibernate.type: trace
+
+logging:
+  config: classpath:logback-spring.xml
+  file:
+    path: ./logs
+  #level:
+  #  org.springframework.security: DEBUG

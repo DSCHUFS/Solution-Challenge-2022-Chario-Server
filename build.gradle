@@ -4,8 +4,8 @@ plugins {
 	id 'java'
 }
 
-group = 'ChariO'
-version = '0.0.1-SNAPSHOT'
+//group = 'ChariO'
+//version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
 configurations {
@@ -55,5 +55,5 @@ tasks.named('test') {
 bootJar {
 	archivesBaseName = 'GiBooApplication'
 	archiveFileName = 'Chario.jar'
-	archiveVersion = "1.0.1"
+	archiveVersion = "1.0.2"
 }
