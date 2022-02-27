@@ -82,7 +82,6 @@ public class SubApiController {
         return new SubscribePostDeleteResponse(count + 1, "정상적으로 저장되었습니다. ");
     }
 
-
     /**
      * 현재 사용자가 좋아요 취소 + 해당 기관의 좋아요 수
      */
