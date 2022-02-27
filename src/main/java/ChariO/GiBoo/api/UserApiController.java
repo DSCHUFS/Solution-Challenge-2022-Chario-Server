@@ -42,13 +42,7 @@ public class UserApiController {
     /**
      * 전체 Userlist 조회
      */
-    @Operation(summary = "user list", description = "유저리스트")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "OK !!"),
-            @ApiResponse(responseCode = "400", description = "BAD REQUEST !!"),
-            @ApiResponse(responseCode = "404", description = "NOT FOUND !!"),
-            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR !!")
-    })
+    @Operation(summary = "사용 X -> 사용자 전체 조회", description = "서버 개발 테스트 용도. 추후 삭제 예정")
     @GetMapping(value="/api/users", produces = "application/json;charset=UTF-8")
     public UserResult userAll(){
         List<User> findUsers = userService.findUsers();
@@ -62,7 +56,7 @@ public class UserApiController {
      * @Header u_id
      * @return User 한명 조회
      */
-    @Operation(summary = "Get user by id", description = "Id로 유저 찾기")
+    @Operation(summary = "사용자 단일 조회", description = "사용자의 username, name, email, phone, birth 조회")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
@@ -77,6 +71,7 @@ public class UserApiController {
     }
 
     /**테스트용**/
+    @Operation(summary = "사용 X -> 단일 사용자 (+구독 기관 + 카테고리) 조회", description = "사용자 정보, 사용자의 구독 기관, 해당 구독 기관의 카테고리 함께 조회 -> 추후 삭제 예정")
     @GetMapping(value="/api/user1/", produces="application/json;charset=UTF-8")
     public OneResult OneUser1(@RequestHeader("Authorization") Long u_id,
                               @RequestParam(value="offset", defaultValue = "0") int offset,
@@ -108,7 +103,7 @@ public class UserApiController {
      * @Header u_id
      * @return status
      */
-    @Operation(summary = "유저 삭제", description = "정상적인 삭제 완료 시, '회원 정보가 삭제되었습니다' 확인 가능.")
+    @Operation(summary = "유저 삭제", description = "정상적으로 삭제 완료 시, '회원 정보가 삭제되었습니다' 확인 가능.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
