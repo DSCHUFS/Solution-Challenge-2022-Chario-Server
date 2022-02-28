@@ -30,6 +30,7 @@ public class DonRepository {
         donation.setFacility(facility);
         donation.setDonationPrice(price);
         donation.setDonationDate(don_date);
+        em.persist(donation);
         return donation;
     }
 

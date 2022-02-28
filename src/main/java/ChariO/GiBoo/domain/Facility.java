@@ -37,6 +37,7 @@ public class Facility {
     @OneToMany(mappedBy = "facility", cascade = CascadeType.ALL)
     private List<Contents> contentsList = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "facility", cascade = CascadeType.ALL)
     private List<Donation> donationList = new ArrayList<>();
 

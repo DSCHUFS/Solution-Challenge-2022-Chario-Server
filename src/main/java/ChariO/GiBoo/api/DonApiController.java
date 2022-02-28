@@ -34,9 +34,9 @@ public class DonApiController {
     @PostMapping(value = "/api/donation", produces = "application/json; charset=UTF-8")
     public DonPostResponse donPost( @RequestHeader("Authorization") Long u_id,
                                     @Valid @RequestBody DonPostRequest request){
-        donService.createOne(u_id, request.getF_name(), request.getDonationPrice(), request.getDonationDate());
+        Donation donation = donService.createOne(u_id, request.getF_name(), request.getDonationPrice(), request.getDonationDate());
         String status = "등록이 완료되었습니다.";
-        return new DonPostResponse(status);
+        return new DonPostResponse(donation, status);
     }
 
     /**
