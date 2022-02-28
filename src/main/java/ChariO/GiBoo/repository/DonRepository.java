@@ -2,13 +2,13 @@ package ChariO.GiBoo.repository;
 
 import ChariO.GiBoo.domain.Donation;
 import ChariO.GiBoo.domain.Facility;
-import ChariO.GiBoo.domain.Subscribe;
 import ChariO.GiBoo.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
@@ -21,7 +21,10 @@ public class DonRepository {
     public Donation create(Long u_id, String f_name, int price, String don_date) {
         Donation donation = new Donation();
         User user = em.find(User.class, u_id);
-        Facility facility = em.find(Facility.class, f_name);
+        TypedQuery<Facility> facilityresult = em.createQuery("select f from Facility f " +
+                        "where f.f_name = :f_name", Facility.class)
+                        .setParameter("f_name", f_name);
+        Facility facility = facilityresult.getSingleResult();
 
         donation.setUser(user);
         donation.setFacility(facility);
