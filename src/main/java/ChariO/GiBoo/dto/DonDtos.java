@@ -49,9 +49,11 @@ public class DonDtos {
 
     @Data
     public static class DonPostResponse {
+        private Donation donation;
         private String status;
 
-        public DonPostResponse(String status) {
+        public DonPostResponse(Donation donation, String status) {
+            this.donation = donation;
             this.status = status;
         }
     }
