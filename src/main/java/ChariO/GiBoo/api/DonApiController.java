@@ -31,12 +31,12 @@ public class DonApiController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND"),
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
-    @PostMapping(value = "/api/donation", produces = "application/json;charset=UTF-8")
+    @PostMapping(value = "/api/donation", produces = "application/json; charset=UTF-8")
     public DonPostResponse donPost( @RequestHeader("Authorization") Long u_id,
                                     @Valid @RequestBody DonPostRequest request){
-        Donation don = donService.createOne(u_id, request.getF_name(), request.getDonationPrice(), request.getDonationDate());
+        donService.createOne(u_id, request.getF_name(), request.getDonationPrice(), request.getDonationDate());
         String status = "등록이 완료되었습니다.";
-        return new DonPostResponse(don, status);
+        return new DonPostResponse(status);
     }
 
     /**
@@ -50,7 +50,7 @@ public class DonApiController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND"),
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
-    @GetMapping(value = "/api/donation", produces = "application/json;charset=UTF-8")
+    @GetMapping(value = "/api/donation", produces = "application/json; charset=UTF-8")
     public DonResult donationsAll( @RequestHeader("Authorization") Long u_id){
         List<Donation> donsByUserId = donService.userDonateAll(u_id);
         String status = "탐색 완료";
@@ -74,10 +74,10 @@ public class DonApiController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND"),
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
-    @PutMapping(value= "/api/donation", produces="application/json;charset=UTF-8")
+    @PutMapping(value= "/api/donation", produces="application/json; charset=UTF-8")
     public DonPutResponse donPut( @RequestHeader("Authorization") Long u_id,
                                   @Valid @RequestBody DonPutRequest request){
-        Donation don = donService.updateOne(u_id, request.getF_name(), request.getPrice(), request.getDon_date());
+        Donation don = donService.updateOne(u_id, request.getF_name(), request.getDonationprice(), request.getDonationDate());
         String status = "변경 사항이 저장되었습니다.";
         return new DonPutResponse(status);
     }
@@ -93,7 +93,7 @@ public class DonApiController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND"),
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
-    @DeleteMapping(value= "/api/donation", produces="application/json;charset=UTF-8")
+    @DeleteMapping(value= "/api/donation", produces="application/json; charset=UTF-8")
     public DonDeleteResponse donDelete( @RequestHeader("Authorization") Long u_id,
                                         @Valid @RequestBody DonDeleteRequest request){
         donService.deleteOne(u_id, request.getF_name());

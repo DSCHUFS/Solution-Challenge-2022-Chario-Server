@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 public class DonDtos {
 
@@ -42,17 +43,15 @@ public class DonDtos {
     @Data
     public static class DonPostRequest {
         @NotEmpty private String f_name;
-        @NotEmpty private int donationPrice;
+        @NotNull private int donationPrice;
         @NotEmpty private String donationDate;
     }
 
     @Data
     public static class DonPostResponse {
-        private Donation donation;
         private String status;
 
-        public DonPostResponse(Donation donation, String status) {
-            this.donation = donation;
+        public DonPostResponse(String status) {
             this.status = status;
         }
     }
@@ -63,8 +62,8 @@ public class DonDtos {
     @Data
     public static class DonPutRequest {
         @NotEmpty private String f_name;
-                  private int price;
-                  private String don_date;
+                  private int donationprice;
+                  private String donationDate;
     }
 
     @Data
