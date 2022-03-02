@@ -19,9 +19,8 @@ public class UserService {
     private final UserRepository userRepository;
 
     @Transactional
-    public void userPost(Long u_id, String u_username, String u_email,
-                         String u_name, String u_phone, String u_birth)
-    {userRepository.post(u_id, u_username, u_name, u_email, u_phone, u_birth);}
+    public void userPost(String u_username, String u_email,
+                         String u_name, String u_phone, String u_birth) {userRepository.post(u_username, u_name, u_email, u_phone, u_birth);}
 
     public List<User> findUsers() {
         return userRepository.findAll();
