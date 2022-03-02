@@ -103,6 +103,23 @@ public class UserDtos {
     }
 
     @Data
+    public static class UserPostRequest{
+        private String u_username;
+        private String u_name;
+        private String u_email;
+        private String u_phone;
+        private String u_birth;
+    }
+
+    @Data
+    public static class UserPostResponse{
+        private String status;
+
+        public UserPostResponse(String status){
+            this.status = status;
+        }
+    }
+    @Data
     public static class UserDeleteResponse{
         private String status;
         public UserDeleteResponse(String status){

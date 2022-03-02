@@ -15,10 +15,18 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class UserRepository {
 
-    @Autowired
     private final EntityManager em;
 
-    public void save(User user) {
+    public void post(String u_username, String u_email,
+                     String u_name, String u_phone, String u_birth) {
+        User user = new User();
+
+        user.setU_username(u_username);
+        user.setU_email(u_email);
+        user.setU_name(u_name);
+        user.setU_phone(u_phone);
+        user.setU_birth(u_birth);
+
         em.persist(user);
     }
 

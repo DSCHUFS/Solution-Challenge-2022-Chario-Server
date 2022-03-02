@@ -22,22 +22,25 @@ public class UserApiController {
     private final UserService userService;
 
     /**
-     * User 저장
-     * @return
+     * @Header u_id
+     * @return status, 저장된 정보
      */
-    /**
-    @Operation(summary = "Save user", description = "유저리스트")
+
+    @Operation(summary = "사용자 저장", description = "전달받은 파라미터로 사용자  저장")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK !!"),
             @ApiResponse(responseCode = "400", description = "BAD REQUEST !!"),
             @ApiResponse(responseCode = "404", description = "NOT FOUND !!"),
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR !!")
     })
-    @GetMapping(value="/api/user", produces= "application/json;charset=UTF-8")
-    public void userSave() {
-        User userSave = userService.userSave();
-
-    }**/
+    @PostMapping(value="/api/user", produces= "application/json;charset=UTF-8")
+    public UserPostResponse userPost(@Valid @RequestBody UserPostRequest request) {
+        userService.userPost(request.getU_username(), request.getU_name(),
+                request.getU_email(), request.getU_phone(), request.getU_birth());
+        String status = "회원 등록이 완료되었습니다.";
+        UserPostResponse userPostResponse = new UserPostResponse(status);
+        return userPostResponse;
+    }
 
     /**
      * 전체 Userlist 조회
