@@ -1,15 +1,11 @@
 package ChariO.GiBoo.api;
 
-import ChariO.GiBoo.domain.Contents;
 import ChariO.GiBoo.domain.Facility;
-import ChariO.GiBoo.dto.FacDtos;
 import ChariO.GiBoo.service.ConService;
 import ChariO.GiBoo.service.FacService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static ChariO.GiBoo.api.ConApiController.*;
+import static ChariO.GiBoo.dto.ConDtos.*;
 import static ChariO.GiBoo.dto.FacDtos.*;
 
 @RestController
@@ -31,7 +27,7 @@ public class FacApiController {
     /**
      * Swagger 명세
      */
-    @Operation(summary = "facility list", description = "기관리스트")
+    @Operation(summary = "전체 기관 리스트", description = "전체 기관 리스트의 수(count), 각 기관의 이름, 설명, 최소 금액, 메인 화면 url, ars 번호, 전화번호, 결제 url, 로고 이미지 url")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK !!"),
             @ApiResponse(responseCode = "400", description = "BAD REQUEST !!"),
@@ -51,7 +47,7 @@ public class FacApiController {
     /**
      Swagger 명세
      **/
-    @Operation(summary = "facility detail", description = "기관 상세")
+    @Operation(summary = "단일 기관 상세 페이지 조회", description = "기관 상세")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "400", description = "BAD REQUEST"),

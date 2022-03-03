@@ -24,6 +24,7 @@ public class User {
     private String u_email;
     private String u_phone;
     private String u_birth;
+    @Column(length = 100, unique = true)
     private String u_uuid;
 
     @JsonIgnore

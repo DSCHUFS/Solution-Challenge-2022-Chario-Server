@@ -4,7 +4,10 @@ import ChariO.GiBoo.domain.Subscribe;
 import ChariO.GiBoo.service.FacService;
 import ChariO.GiBoo.service.SubService;
 import ChariO.GiBoo.service.UserService;
+import io.swagger.annotations.ApiParam;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
@@ -48,7 +51,8 @@ public class SubApiController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @GetMapping(value = "/api/subscribe/", produces = "application/json;charset=UTF-8")
-    public UserSubResponse userSubscribe(@RequestHeader("Authorization") Long u_id){
+    public UserSubResponse userSubscribe(@RequestHeader("Authorization") String u_uuid){
+        Long u_id = userService.findByUuid(u_uuid);
         List<Subscribe> subscribeList = subscribeService.findByUser(u_id);
         List<UserSubDto> collect = subscribeList.stream()
                 .map(s -> new UserSubDto(s))
@@ -68,7 +72,8 @@ public class SubApiController {
     })
     @PostMapping(value = "/api/subscribe/{fac_id}", produces = "application/json;charset=UTF-8")
     public SubscribePostDeleteResponse subscribePost(@PathVariable("fac_id") Long f_id,
-                                              @RequestHeader("Authorization") Long u_id){
+                                                     @RequestHeader("Authorization") String u_uuid){
+        Long u_id = userService.findByUuid(u_uuid);
         List<Subscribe> subsByFacId = subscribeService.findSubsByFacId(f_id);
         long count = subsByFacId.stream().count();
         if (subsByFacId.stream().anyMatch(s -> s.getUser().getId() == u_id)){
@@ -94,7 +99,8 @@ public class SubApiController {
     })
     @DeleteMapping(value = "/api/subscribe/{fac_id}", produces = "application/json;charset=UTF-8")
     public SubscribePostDeleteResponse subscribeDelete(@PathVariable("fac_id") Long f_id,
-                                                       @RequestHeader("Authorization") Long u_id){
+                                                       @RequestHeader("Authorization") String u_uuid){
+        Long u_id = userService.findByUuid(u_uuid);
         List<Subscribe> subsByFacId = subscribeService.findSubsByFacId(f_id);
         if (subsByFacId.stream().anyMatch(s -> s.getUser().getId() == u_id)){
             subscribeService.deleteByUserFac(u_id, f_id);
