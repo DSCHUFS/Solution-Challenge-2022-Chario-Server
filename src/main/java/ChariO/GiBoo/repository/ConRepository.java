@@ -15,8 +15,7 @@ public class ConRepository {
     private final FacRepository facRepository;
 
     public Contents findOne(Long id){
-        Contents content = em.find(Contents.class, id);
-        return content;
+        return em.find(Contents.class, id);
     }
 
     public List<Contents> findByFac(Long id){

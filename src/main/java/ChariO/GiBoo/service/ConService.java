@@ -15,4 +15,8 @@ public class ConService {
     public List<Contents> findByFac(Long id){
         return contentRepository.findByFac(id);
     }
+
+    public Contents findOne(Long con_id){
+        return contentRepository.findOne(con_id);
+    }
 }
