@@ -76,5 +76,13 @@ public class UserRepository {
         em.remove(user);
     }
 
+    public Long findIdByUuid(String u_uuid){
+        String u_uuid2 = "a";
+        User user = em.createQuery("select distinct u from User u" +
+                        " where u.u_uuid = :u_uuid ", User.class)
+                .setParameter("u_uuid", u_uuid2)
+                .getSingleResult();
+        return user.getId();
+    }
     //public void delte(User user) {}
 }

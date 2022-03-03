@@ -3,6 +3,8 @@ package ChariO.GiBoo.api;
 import ChariO.GiBoo.domain.User;
 import ChariO.GiBoo.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
@@ -66,8 +68,9 @@ public class UserApiController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND"),
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
-    @GetMapping(value = "/api/user/", produces = "application/json;charset=UTF-8")
-    public OneUserResponse oneUser(@RequestHeader("Authorization") Long u_id){
+    @GetMapping(value = "/api/user", produces = "application/json;charset=UTF-8")
+    public OneUserResponse oneUser(@RequestHeader("Authorization") String u_uuid){
+        Long u_id = userService.findByUuid("yj");
         User user = userService.findOne(u_id);
         OneUserResponse oneUserResponse = new OneUserResponse(user);
         return oneUserResponse;
@@ -75,11 +78,11 @@ public class UserApiController {
 
     /**테스트용**/
     @Operation(summary = "사용 X -> 단일 사용자 (+구독 기관 + 카테고리) 조회", description = "사용자 정보, 사용자의 구독 기관, 해당 구독 기관의 카테고리 함께 조회 -> 추후 삭제 예정")
-    @GetMapping(value="/api/user1/", produces="application/json;charset=UTF-8")
-    public OneResult OneUser1(@RequestHeader("Authorization") Long u_id,
+    @GetMapping(value="/api/user1", produces="application/json;charset=UTF-8")
+    public OneResult OneUser1(@RequestHeader("Authorization") String u_uuid,
                               @RequestParam(value="offset", defaultValue = "0") int offset,
-                              @RequestParam(value="limit", defaultValue = "100") int limit)
-    {
+                              @RequestParam(value="limit", defaultValue = "100") int limit) {
+        Long u_id = userService.findByUuid(u_uuid);
         List<User> userByID = userService.findOne1(u_id, offset, limit);
         List<EveryInfoUserDto> result = userByID.stream()
                 .map(u -> new EveryInfoUserDto(u))
@@ -94,9 +97,10 @@ public class UserApiController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND"),
             @ApiResponse(responseCode = "500", description = "존재하는 회원이 없습니다.")
     })
-    @PutMapping(value = "/api/user/", produces="application/json;charset=UTF-8")
-    public UserPutResponse userPut(@RequestHeader("Authorization") Long u_id,
-                                   @Valid @RequestBody UserPutRequest request){
+    @PutMapping(value = "/api/user", produces="application/json;charset=UTF-8")
+    public UserPutResponse userPut(@RequestHeader("Authorization") String u_uuid,
+                                   @Valid @RequestBody UserPutRequest request) {
+        Long u_id = userService.findByUuid(u_uuid);
         User user = userService.updateOne(u_id, request.getName(), request.getEmail(), request.getPhone());
         String status = "변경 사항이 저장되었습니다.";
         return new UserPutResponse(user, status);
@@ -113,8 +117,9 @@ public class UserApiController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND"),
             @ApiResponse(responseCode = "500", description = "존재하는 회원이 없습니다.")
     })
-    @DeleteMapping(value = "/api/user/", produces="application/json;charset=UTF-8")
-    public UserDeleteResponse userDelete(@RequestHeader("Authorization") Long u_id){
+    @DeleteMapping(value = "/api/user", produces="application/json;charset=UTF-8")
+    public UserDeleteResponse userDelete(@RequestHeader("Authorization") String u_uuid){
+        Long u_id = userService.findByUuid(u_uuid);
         userService.deleteOne(u_id);
         String status = "회원 정보가 삭제되었습니다.";
         return new UserDeleteResponse(status);

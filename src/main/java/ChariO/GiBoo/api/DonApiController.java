@@ -2,7 +2,10 @@ package ChariO.GiBoo.api;
 
 import ChariO.GiBoo.domain.Donation;
 import ChariO.GiBoo.service.DonService;
+import ChariO.GiBoo.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +22,7 @@ import static ChariO.GiBoo.dto.DonDtos.*;
 public class DonApiController {
 
     private final DonService donService;
+    private final UserService userService;
 
     /**
      * @Header u_id
@@ -32,8 +36,9 @@ public class DonApiController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @PostMapping(value = "/api/donation", produces = "application/json; charset=UTF-8")
-    public DonPostResponse donPost( @RequestHeader("Authorization") Long u_id,
+    public DonPostResponse donPost(@RequestHeader("Authorization") String u_uuid,
                                     @Valid @RequestBody DonPostRequest request){
+        Long u_id = userService.findByUuid(u_uuid);
         Donation donation = donService.createOne(u_id, request.getF_name(), request.getDonationPrice(), request.getDonationDate());
         String status = "등록이 완료되었습니다.";
         return new DonPostResponse(donation, status);
@@ -51,7 +56,8 @@ public class DonApiController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @GetMapping(value = "/api/donation", produces = "application/json; charset=UTF-8")
-    public DonResult donationsAll( @RequestHeader("Authorization") Long u_id){
+    public DonResult donationsAll(@RequestHeader("Authorization") String u_uuid){
+        Long u_id = userService.findByUuid(u_uuid);
         List<Donation> donsByUserId = donService.userDonateAll(u_id);
         String status = "탐색 완료";
         List<DonDto> collect = donsByUserId.stream()
@@ -75,8 +81,9 @@ public class DonApiController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @PutMapping(value= "/api/donation", produces="application/json; charset=UTF-8")
-    public DonPutResponse donPut( @RequestHeader("Authorization") Long u_id,
+    public DonPutResponse donPut(@RequestHeader("Authorization") String u_uuid,
                                   @Valid @RequestBody DonPutRequest request){
+        Long u_id = userService.findByUuid(u_uuid);
         Donation don = donService.updateOne(u_id, request.getF_name(), request.getDonationprice(), request.getDonationDate());
         String status = "변경 사항이 저장되었습니다.";
         return new DonPutResponse(status);
@@ -94,8 +101,9 @@ public class DonApiController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @DeleteMapping(value= "/api/donation", produces="application/json; charset=UTF-8")
-    public DonDeleteResponse donDelete( @RequestHeader("Authorization") Long u_id,
+    public DonDeleteResponse donDelete(@RequestHeader("Authorization") String u_uuid,
                                         @Valid @RequestBody DonDeleteRequest request){
+        Long u_id = userService.findByUuid(u_uuid);
         donService.deleteOne(u_id, request.getF_name());
         String status = "삭제되었습니다.";
         return new DonDeleteResponse(status);

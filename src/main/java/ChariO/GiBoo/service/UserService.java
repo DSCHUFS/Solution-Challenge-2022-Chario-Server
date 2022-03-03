@@ -40,6 +40,11 @@ public class UserService {
     public void deleteOne(Long u_id) {
         userRepository.delete(u_id);
     }
+
+    public Long findByUuid(String u_uuid){
+        Long u_id = userRepository.findIdByUuid(u_uuid);
+        return u_id;
+    }
     //public post
     //public save?
 }
