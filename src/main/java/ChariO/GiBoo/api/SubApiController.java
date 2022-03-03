@@ -50,7 +50,7 @@ public class SubApiController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND"),
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
-    @GetMapping(value = "/api/subscribe/", produces = "application/json;charset=UTF-8")
+    @GetMapping(value = "/api/subscribe", produces = "application/json;charset=UTF-8")
     public UserSubResponse userSubscribe(@RequestHeader("Authorization") String u_uuid){
         Long u_id = userService.findByUuid(u_uuid);
         List<Subscribe> subscribeList = subscribeService.findByUser(u_id);
