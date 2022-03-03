@@ -10,6 +10,7 @@ public class ConDtos {
 
     @Data
     public static class ContentDto {
+        private Long f_id;
         private Long c_id;
         private String title;
         private String body;
@@ -20,6 +21,7 @@ public class ConDtos {
         private Date pub_date;
 
         public ContentDto(Contents content) {
+            this.f_id = content.getFacility().getId();
             this.c_id = content.getId();
             this.title = content.getC_title();
             this.body = content.getC_contents();
