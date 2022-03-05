@@ -17,6 +17,7 @@ public class FacDtos {
 
     @Data
     public static class FacDto {
+        private Long f_id;
         private String f_name;
         private String f_intro;
         private int f_minimal;
@@ -27,6 +28,7 @@ public class FacDtos {
         private String f_logo;
 
         public FacDto(Facility f){
+            this.f_id = f.getId();
             this.f_name = f.getF_name();
             this.f_intro = f.getF_intro();
             this.f_minimal = f.getF_minimal();
