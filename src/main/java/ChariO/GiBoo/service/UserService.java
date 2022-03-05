@@ -20,7 +20,7 @@ public class UserService {
 
     @Transactional
     public void userPost(String u_username, String u_email,
-                         String u_name, String u_phone, String u_birth) {userRepository.post(u_username, u_name, u_email, u_phone, u_birth);}
+                         String u_name, String u_phone, String u_birth, String u_uuid) {userRepository.post(u_username, u_name, u_email, u_phone, u_birth, u_uuid);}
 
     public List<User> findUsers() {
         return userRepository.findAll();
