@@ -18,7 +18,7 @@ public class UserRepository {
     private final EntityManager em;
 
     public void post(String u_username, String u_email,
-                     String u_name, String u_phone, String u_birth) {
+                     String u_name, String u_phone, String u_birth, String u_uuid) {
         User user = new User();
 
         user.setU_username(u_username);
@@ -26,6 +26,7 @@ public class UserRepository {
         user.setU_name(u_name);
         user.setU_phone(u_phone);
         user.setU_birth(u_birth);
+        user.setU_uuid(u_uuid);
 
         em.persist(user);
     }

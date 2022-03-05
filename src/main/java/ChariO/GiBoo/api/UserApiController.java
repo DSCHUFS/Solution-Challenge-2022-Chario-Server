@@ -36,9 +36,9 @@ public class UserApiController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR !!")
     })
     @PostMapping(value="/api/user", produces= "application/json;charset=UTF-8")
-    public UserPostResponse userPost(@Valid @RequestBody UserPostRequest request) {
+    public UserPostResponse userPost(@RequestHeader("Authorization") String u_uuid, @Valid @RequestBody UserPostRequest request){
         userService.userPost(request.getU_username(), request.getU_name(),
-                request.getU_email(), request.getU_phone(), request.getU_birth());
+                request.getU_email(), request.getU_phone(), request.getU_birth(), u_uuid);
         String status = "회원 등록이 완료되었습니다.";
         UserPostResponse userPostResponse = new UserPostResponse(status);
         return userPostResponse;
