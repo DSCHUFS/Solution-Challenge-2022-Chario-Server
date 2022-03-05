@@ -28,11 +28,11 @@ public class User {
     private String u_uuid;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Donation> donationList = new ArrayList<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Subscribe> subscribeList = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")

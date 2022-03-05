@@ -77,10 +77,9 @@ public class UserRepository {
     }
 
     public Long findIdByUuid(String u_uuid){
-        String u_uuid2 = "a";
         User user = em.createQuery("select distinct u from User u" +
                         " where u.u_uuid = :u_uuid ", User.class)
-                .setParameter("u_uuid", u_uuid2)
+                .setParameter("u_uuid", u_uuid)
                 .getSingleResult();
         return user.getId();
     }

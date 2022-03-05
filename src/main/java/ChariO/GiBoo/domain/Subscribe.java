@@ -18,11 +18,11 @@ public class Subscribe {
     @Column(name="u_f_sub_id") //PK
     private Long id;
 
-    @ManyToOne(fetch = LAZY, cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name= "u_id")
     private User user;
 
-    @ManyToOne(fetch = LAZY, cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name= "f_id")
     private Facility facility;
 }
