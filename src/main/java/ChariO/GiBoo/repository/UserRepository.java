@@ -83,5 +83,6 @@ public class UserRepository {
                 .getSingleResult();
         return user.getId();
     }
+
     //public void delte(User user) {}
 }

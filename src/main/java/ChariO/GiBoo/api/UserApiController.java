@@ -70,7 +70,7 @@ public class UserApiController {
     })
     @GetMapping(value = "/api/user", produces = "application/json;charset=UTF-8")
     public OneUserResponse oneUser(@RequestHeader("Authorization") String u_uuid){
-        Long u_id = userService.findByUuid("yj");
+        Long u_id = userService.findByUuid(u_uuid);
         User user = userService.findOne(u_id);
         OneUserResponse oneUserResponse = new OneUserResponse(user);
         return oneUserResponse;
