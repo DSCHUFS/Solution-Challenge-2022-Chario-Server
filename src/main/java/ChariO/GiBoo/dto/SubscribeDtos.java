@@ -83,6 +83,21 @@ public class SubscribeDtos {
     }
 
     @Data
+    public static class SubscribeListPostRequest {
+        private List<Long> fac_id;
+    }
+
+    @Data
+    public static class SubscribeListPostResponse {
+        private String status;
+
+        public  SubscribeListPostResponse(String status){
+            this.status = status;
+        }
+    }
+
+
+    @Data
     public static class SubscribePostDeleteResponse {
         Long fac_count;
         String status;

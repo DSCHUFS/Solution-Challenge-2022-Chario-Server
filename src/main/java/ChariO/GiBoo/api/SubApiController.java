@@ -61,6 +61,34 @@ public class SubApiController {
     }
 
     /**
+     * 신규 사용자의 구독(좋아요)기관 추가.
+     */
+    @Operation(summary = "Get subscribe list from new user", description = "신규 사용자의 구독 리스트 추가")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
+            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
+    })
+    @PostMapping(value = "/api/subscribe", produces = "application/json;charset=UTF-8")
+    public SubscribeListPostResponse subscribeListPost(@RequestHeader("Authorization") String u_uuid,
+                                                       @RequestBody SubscribeListPostRequest request){
+
+        Long u_id = userService.findByUuid(u_uuid);
+        List<Long> facList = request.getFac_id();
+
+        for(Long tmp:facList) {
+            Subscribe subscribe = new Subscribe();
+            subscribe.setUser(userService.findOne(u_id));
+            subscribe.setFacility(facService.findOne(tmp));
+            subscribeService.newSubscribe(subscribe);
+        }
+
+        String status = "정상적으로 저장 되었습니다.";
+        return new SubscribeListPostResponse(status);
+    }
+
+    /**
      * 현재 사용자가 신규 좋아요를 누름. + 해당 기관의 좋아요 개수
      */
     @Operation(summary = "user post subscribe", description = "사용자가 해당 기관을 새로 구독하는 경우")
