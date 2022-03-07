@@ -25,4 +25,8 @@ public class FacService {
     public Facility findOne(Long facId){
         return facRepository.findOne(facId);
     }
+
+    //For Search
+    public Facility findOneByName(String facName) { return facRepository.findOneByName(facName); }
+
 }
