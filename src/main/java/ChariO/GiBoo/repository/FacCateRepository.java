@@ -1,13 +1,18 @@
 package ChariO.GiBoo.repository;
 
+import ChariO.GiBoo.domain.Category;
 import ChariO.GiBoo.domain.Facility;
 import ChariO.GiBoo.domain.FacilityCategory;
+import ChariO.GiBoo.dto.CateDtos;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static ChariO.GiBoo.dto.CateDtos.*;
 
 @Repository
 @RequiredArgsConstructor
@@ -33,5 +38,11 @@ public class FacCateRepository {
                 .setParameter("id", id)
                 .getResultList();
     }
-
+    
+    public List<CateDto> findCategoryAll(){
+        List<Category> categories = em.createQuery("select c from Category c", Category.class)
+                .getResultList();
+        List<CateDto> result = categories.stream().map(c -> new CateDto(c)).collect(Collectors.toList());
+        return result;
+    }
 }
