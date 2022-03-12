@@ -27,4 +27,11 @@ public class SearchDtos {
             this.f_intro = facility.getF_intro();
         }
     }
+
+    @Data
+    @AllArgsConstructor
+    public static class SearchGetResponse2<T> {
+        private int count;
+        private T data;
+    }
 }

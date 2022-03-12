@@ -16,6 +16,7 @@ public class FacDtos {
     }
 
     @Data
+    @AllArgsConstructor
     public static class FacDto {
         private Long f_id;
         private String f_name;

@@ -5,6 +5,7 @@ import ChariO.GiBoo.domain.FacilityCategory;
 import ChariO.GiBoo.repository.FacRepository;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class FacService {
+    @Autowired
     private final FacRepository facRepository;
 
     public List<Facility> findFacs(){
@@ -26,7 +28,11 @@ public class FacService {
         return facRepository.findOne(facId);
     }
 
-    //For Search
-    public Facility findOneByName(String facName) { return facRepository.findOneByName(facName); }
+    //For Search v1
+    //public Facility findOneByName(String facName) { return facRepository.findOneByName(facName); }
+
+    //For Search v2
+    public List<Facility> findOneByNameLike(String facName) { return facRepository.findOneByNameLike(facName); }
+
 
 }
