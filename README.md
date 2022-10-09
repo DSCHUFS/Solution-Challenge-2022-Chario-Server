@@ -35,12 +35,6 @@ Gather news from donation organizations in one place to make it easier for peopl
 [![Preview](https://img.youtube.com/vi/sT0wWuW2aR8/0.jpg)](https://youtu.be/sT0wWuW2aR8?t=3)
 
 
-https://img.shields.io/github/languages/count/beygee/survive
-https://img.shields.io/github/languages/top/beygee/survive
-https://img.shields.io/github/languages/code-size/beygee/survive
-https://img.shields.io/github/issues-closed/beygee/survive
-
-
 # Contributors
 - [Donghyun Shin](https://github.com/Canihelpme)
 - [Yeonju Lee](https://github.com/430lyj)
